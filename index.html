@@ -3,46 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AromaVerse - Tienda de Perfumes Premium</title>
+    <title>AromaVerse - Tienda de Perfumes</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
                 <h1>AROMAVERSE</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#inicio" onclick="scrollToSection('inicio')">Inicio</a></li>
-                <li><a href="#tienda" onclick="scrollToSection('tienda')">Tienda</a></li>
-                <li><a href="#sobre" onclick="scrollToSection('sobre')">Sobre</a></li>
-                <li><a href="#contacto" onclick="scrollToSection('contacto')">Contacto</a></li>
+                <li><a href="#" onclick="filterProducts('all')">Colección</a></li>
                 <li><a href="#" onclick="toggleCart()" class="cart-icon">🛒 <span id="cart-count">0</span></a></li>
             </ul>
         </div>
     </nav>
 
-    <section id="inicio" class="hero">
+    <header class="hero">
         <div class="hero-content">
-            <h2>Descubre Tu Aroma Signature</h2>
-            <p>Colecciones exclusivas de perfumes de nicho y árabes seleccionados con cuidado</p>
-            <button class="btn btn-primary" onclick="scrollToSection('tienda')">Explorar Colección</button>
+            <h2>Descubre tu esencia</h2>
+            <p>Perfumes Árabes, Nicho y Trending.</p>
         </div>
-    </section>
+    </header>
 
-    <section id="tienda" class="shop">
-        <div class="container">
-            <h2>Nuestra Colección</h2>
-            
-            <div class="filters">
-                <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
-                <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
-                <button class="filter-btn" onclick="filterProducts('arabic')">Árabes</button>
-                <button class="filter-btn" onclick="filterProducts('niche')">Nicho</button>
-            </div>
+    <section class="shop container">
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
+            <button class="filter-btn" onclick="filterProducts('arabic')">Árabes</button>
+            <button class="filter-btn" onclick="filterProducts('niche')">Nicho</button>
+            <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
+        </div>
 
-            <div class="products-grid" id="products-grid">
-                </div>
+        <div class="products-grid" id="products-grid">
+            <p style="text-align:center; width:100%;">Cargando perfumes...</p>
         </div>
     </section>
 
@@ -52,45 +47,16 @@
                 <h3>Tu Carrito</h3>
                 <button onclick="toggleCart()" class="close-btn">✕</button>
             </div>
-            <div id="cart-items" class="cart-items">
-                </div>
+            <div id="cart-items" class="cart-items"></div>
             <div class="cart-footer">
-                <div class="cart-total">
-                    <strong>Total:</strong>
-                    <span id="cart-total">$0.00</span>
-                </div>
-                <button class="btn btn-primary" onclick="checkout()">Ir a Checkout</button>
-                <button class="btn btn-secondary" onclick="toggleCart()">Seguir Comprando</button>
+                <div class="cart-total">Total: <span id="cart-total">$0.00</span></div>
+                <button class="btn btn-primary" onclick="checkout()">Pagar</button>
             </div>
         </div>
     </div>
 
-    <section id="sobre" class="about">
-        <div class="container">
-            <h2>Sobre AromaVerse</h2>
-            <p>En AromaVerse, creemos que cada fragancia cuenta una historia. Nuestro compromiso es traerte los mejores perfumes de nicho y árabes del mercado.</p>
-            
-            <div class="features">
-                <div class="feature">
-                    <h3>🎯 Selección Curada</h3>
-                    <p>Cada perfume es seleccionado por expertos en fragancias</p>
-                </div>
-                <div class="feature">
-                    <h3>✨ Autenticidad Garantizada</h3>
-                    <p>100% productos originales y auténticos</p>
-                </div>
-                <div class="feature">
-                    <h3>📦 Envío Rápido</h3>
-                    <p>Entrega en 2-3 días hábiles</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 AromaVerse. Todos los derechos reservados.</p>
-        </div>
+        <p>&copy; 2026 AromaVerse</p>
     </footer>
 
     <script src="script.js"></script>
