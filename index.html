@@ -1,116 +1,139 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aromaverse | Tienda Premium</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <title>AromaVerse - Tienda de Perfumes Premium</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
+    <!-- Navegación -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
                 <h1>AROMAVERSE</h1>
-                <p>Minimalismo Sensorial</p>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Colección</a></li>
-                <li><a href="pagina2.html">Sobre Nosotros</a></li> <li><a href="#">Contacto</a></li>
-                <li class="cart-icon">🛒 Carrito (0)</li>
+                <li><a href="#inicio" onclick="scrollToSection('inicio')">Inicio</a></li>
+                <li><a href="#tienda" onclick="scrollToSection('tienda')">Tienda</a></li>
+                <li><a href="#sobre" onclick="scrollToSection('sobre')">Sobre</a></li>
+                <li><a href="#contacto" onclick="scrollToSection('contacto')">Contacto</a></li>
+                <li><a href="#" onclick="toggleCart()" class="cart-icon">🛒 <span id="cart-count">0</span></a></li>
             </ul>
         </div>
     </nav>
 
-    <header class="hero">
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
         <div class="hero-content">
-            <h2>Descubre tu esencia</h2>
-            <p>Una colección curada de fragancias premium para momentos inolvidables.</p>
-            <button class="btn btn-primary">Ver Catálogo</button>
-        </div>
-    </header>
-
-    <section class="shop container">
-        <h2>Nuestros Perfumes</h2>
-        
-        <div class="filters">
-            <button class="filter-btn active">Todos</button>
-            <button class="filter-btn">Hombre</button>
-            <button class="filter-btn">Mujer</button>
-            <button class="filter-btn">Unisex</button>
-        </div>
-
-        <div class="products-grid">
-            <article class="product-card">
-                <div class="product-image">🧴</div>
-                <div class="product-info">
-                    <span class="product-category">Perfume</span>
-                    <h3 class="product-name">Santal 33</h3>
-                    <div class="product-rating">★★★★★</div>
-                    <p class="product-description">Notas de sándalo, cedro y cardamomo. Un clásico moderno.</p>
-                    <div class="product-price">$180.00</div>
-                    <button class="btn-add-cart">Añadir al Carrito</button>
-                </div>
-            </article>
-
-            <article class="product-card">
-                <div class="product-image">🌸</div>
-                <div class="product-info">
-                    <span class="product-category">Eau de Parfum</span>
-                    <h3 class="product-name">Rose Prick</h3>
-                    <div class="product-rating">★★★★☆</div>
-                    <p class="product-description">Rosa búlgara y cúrcuma. Elegancia floral y especiada.</p>
-                    <div class="product-price">$210.00</div>
-                    <button class="btn-add-cart">Añadir al Carrito</button>
-                </div>
-            </article>
-
-            <article class="product-card">
-                <div class="product-image">🍊</div>
-                <div class="product-info">
-                    <span class="product-category">Cologne</span>
-                    <h3 class="product-name">Neroli Portofino</h3>
-                    <div class="product-rating">★★★★★</div>
-                    <p class="product-description">Cítricos frescos, lavanda y ámbar. El verano italiano.</p>
-                    <div class="product-price">$165.00</div>
-                    <button class="btn-add-cart">Añadir al Carrito</button>
-                </div>
-            </article>
+            <h2>Descubre Tu Aroma Signature</h2>
+            <p>Colecciones exclusivas de perfumes de nicho y árabes seleccionados con cuidado</p>
+            <button class="btn btn-primary" onclick="scrollToSection('tienda')">Explorar Colección</button>
         </div>
     </section>
 
-    <section class="about">
+    <!-- Sección de Tienda -->
+    <section id="tienda" class="shop">
         <div class="container">
-            <h2>Por qué elegirnos</h2>
+            <h2>Nuestra Colección</h2>
+            
+            <!-- Filtros -->
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
+                <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
+                <button class="filter-btn" onclick="filterProducts('arabic')">Árabes</button>
+                <button class="filter-btn" onclick="filterProducts('niche')">Nicho</button>
+            </div>
+
+            <!-- Grid de Productos -->
+            <div class="products-grid" id="products-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Carrito -->
+    <div id="cart-panel" class="cart-panel">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <button onclick="toggleCart()" class="close-btn">✕</button>
+            </div>
+            <div id="cart-items" class="cart-items">
+                <!-- Los items del carrito se cargarán aquí -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total:</strong>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="btn btn-primary" onclick="checkout()">Ir a Checkout</button>
+                <button class="btn btn-secondary" onclick="toggleCart()">Seguir Comprando</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="sobre" class="about">
+        <div class="container">
+            <h2>Sobre AromaVerse</h2>
+            <p>En AromaVerse, creemos que cada fragancia cuenta una historia. Nuestro compromiso es traerte los mejores perfumes de nicho y árabes del mercado, seleccionados cuidadosamente para garantizar calidad, autenticidad y una experiencia olfativa excepcional.</p>
+            
             <div class="features">
                 <div class="feature">
-                    <h3>💎 Calidad Premium</h3>
-                    <p>Solo trabajamos con casas perfumeras originales y certificadas.</p>
+                    <h3>🎯 Selección Curada</h3>
+                    <p>Cada perfume es seleccionado por expertos en fragancias</p>
                 </div>
                 <div class="feature">
-                    <h3>🚚 Envío Seguro</h3>
-                    <p>Empaquetado especial para proteger la integridad del cristal.</p>
+                    <h3>✨ Autenticidad Garantizada</h3>
+                    <p>100% productos originales y auténticos</p>
                 </div>
                 <div class="feature">
-                    <h3>✨ Muestras Gratis</h3>
-                    <p>Recibe 2 decants de prueba con cada compra superior a $100.</p>
+                    <h3>📦 Envío Rápido</h3>
+                    <p>Entrega en 2-3 días hábiles</p>
+                </div>
+                <div class="feature">
+                    <h3>💬 Asesoría Olfativa</h3>
+                    <p>Nuestros expertos te ayudan a encontrar tu aroma</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📧 Email</h3>
+                    <p><a href="mailto:info@aromaverse.com">info@aromaverse.com</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>📱 Teléfono</h3>
+                    <p><a href="tel:+584242201111">0424-220-1111</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>📍 Ubicación</h3>
+                    <p>Caracas, Venezuela</p>
+                </div>
+                <div class="contact-item">
+                    <h3>🕐 Horario</h3>
+                    <p>Lun-Vie: 9AM - 6PM EST</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 Aromaverse. Todos los derechos reservados.</p>
+        <div class="container">
+            <p>&copy; 2026 AromaVerse. Todos los derechos reservados.</p>
+            <p>Hecho con ❤️ para los amantes de las fragancias</p>
+        </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
-                   
-       
-    
-    
-        
-    
-   
