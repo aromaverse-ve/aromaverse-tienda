@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AromaVerse - Tienda de Perfumes</title>
+    <title>AromaVerse - Tienda Premium</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -13,31 +13,73 @@
         <div class="container">
             <div class="nav-brand">
                 <h1>AROMAVERSE</h1>
+                <p>Minimalismo Sensorial</p>
             </div>
             <ul class="nav-links">
-                <li><a href="#" onclick="filterProducts('all')">Colección</a></li>
-                <li><a href="#" onclick="toggleCart()" class="cart-icon">🛒 <span id="cart-count">0</span></a></li>
+                <li><a href="#inicio" onclick="scrollToSection('inicio')">Inicio</a></li>
+                <li><a href="#products-grid" onclick="scrollToSection('products-grid')">Tienda</a></li>
+                <li><a href="#sobre" onclick="scrollToSection('sobre')">Sobre Nosotros</a></li>
+                <li><a href="#contacto" onclick="scrollToSection('contacto')">Contacto</a></li>
+                <li class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></li>
             </ul>
         </div>
     </nav>
 
-    <header class="hero">
+    <header id="inicio" class="hero">
         <div class="hero-content">
             <h2>Descubre tu esencia</h2>
-            <p>Perfumes Árabes, Nicho y Trending.</p>
+            <p>Una colección curada de fragancias premium para momentos inolvidables.</p>
+            <button class="btn btn-primary" onclick="scrollToSection('products-grid')">Ver Catálogo</button>
         </div>
     </header>
 
     <section class="shop container">
+        <h2>Nuestros Perfumes</h2>
+        
         <div class="filters">
             <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
+            <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
             <button class="filter-btn" onclick="filterProducts('arabic')">Árabes</button>
             <button class="filter-btn" onclick="filterProducts('niche')">Nicho</button>
-            <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
         </div>
 
         <div class="products-grid" id="products-grid">
-            <p style="text-align:center; width:100%;">Cargando perfumes...</p>
+            </div>
+    </section>
+
+    <section id="sobre" class="about">
+        <div class="container">
+            <h2>Por qué elegirnos</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>💎 Calidad Premium</h3>
+                    <p>Solo trabajamos con casas perfumeras originales.</p>
+                </div>
+                <div class="feature">
+                    <h3>🚚 Envío Seguro</h3>
+                    <p>Empaquetado especial para proteger el cristal.</p>
+                </div>
+                <div class="feature">
+                    <h3>✨ Decants Originales</h3>
+                    <p>Prueba perfumes de lujo en formatos accesibles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Ubicación</h3>
+                    <p>Caracas, Venezuela</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Instagram</h3>
+                    <p>@aromaverse.ve</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -50,13 +92,14 @@
             <div id="cart-items" class="cart-items"></div>
             <div class="cart-footer">
                 <div class="cart-total">Total: <span id="cart-total">$0.00</span></div>
-                <button class="btn btn-primary" onclick="checkout()">Pagar</button>
+                <button class="btn btn-primary" onclick="checkout()">Finalizar Compra</button>
+                <button class="btn btn-secondary" onclick="toggleCart()">Seguir viendo</button>
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2026 AromaVerse</p>
+        <p>&copy; 2026 AromaVerse. Todos los derechos reservados.</p>
     </footer>
 
     <script src="script.js"></script>
