@@ -192,4 +192,248 @@ const products = [
         decants: [
             { ml: 5, price: 16.00 },
             { ml: 10, price: 29.00 },
-            { ml: 15, price: 42.0
+            { ml: 15, price: 42.00 }
+        ]
+    },
+    {
+        id: 14,
+        name: "Amouage Dia Man",
+        category: "niche",
+        gender: "Hombre",
+        rating: 4.7,
+        reviews: 70,
+        description: "Sofisticación pura. Incienso de Omán mezclado magistralmente con peonía y vetiver seco.",
+        price: 98.00,
+        decants: [
+            { ml: 5, price: 17.00 },
+            { ml: 10, price: 30.00 },
+            { ml: 15, price: 44.00 }
+        ]
+    }
+];
+
+/* --- LÓGICA DE LA TIENDA --- */
+
+let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Cargando tienda...");
+    renderProducts(products); 
+    updateCartCount();
+});
+
+function renderProducts(productsToShow) {
+    const grid = document.getElementById('products-grid');
+    if(!grid) {
+        console.error("No encuentro el grid de productos");
+        return;
+    }
+    grid.innerHTML = '';
+    
+    if (productsToShow.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron productos.</p>';
+        return;
+    }
+
+    productsToShow.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        let genderIcon = '👥';
+        if (product.gender === 'Hombre') genderIcon = '👨';
+        else if (product.gender === 'Mujer') genderIcon = '👩';
+        
+        let catLabel = 'Nicho';
+        if(product.category === 'trending') catLabel = 'Trending 🔥';
+        else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
+        
+        // CONSTRUCCIÓN DE OPCIONES
+        let optionsHTML = '<div class="decants-section"><label>Selecciona formato:</label><div class="decants-options">';
+        
+        // 1. Botella (Seleccionada por defecto con 'checked')
+        optionsHTML += `
+            <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
+                <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
+                <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
+            </label>
+        `;
+
+        // 2. Decants
+        product.decants.forEach((decant) => {
+            optionsHTML += `
+                <label class="decant-option">
+                    <input type="radio" name="decant-${product.id}" value="${decant.ml}" data-price="${decant.price}" onchange="updatePrice(${product.id})">
+                    <span class="decant-label">${decant.ml}ml - $${decant.price.toFixed(2)}</span>
+                </label>
+            `;
+        });
+        optionsHTML += '</div></div>';
+        
+        // PRECIO INICIAL (El de la botella)
+        let initialPrice = product.price.toFixed(2);
+
+        card.innerHTML = `
+            <div class="product-image">🧴</div>
+            <div class="product-info">
+                <div class="product-category">${catLabel}</div>
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-gender">${genderIcon} ${product.gender}</div>
+                <div class="product-rating">⭐ ${product.rating} <span style="color:#aaa; font-size:0.8em">(${product.reviews})</span></div>
+                <p class="product-description">${product.description}</p>
+                
+                <div class="product-prices">
+                    <div class="price-item">
+                        <span class="price-label">Precio Seleccionado:</span>
+                        <span class="price-value" id="price-${product.id}">$${initialPrice}</span>
+                    </div>
+                </div>
+                
+                <div class="product-stock">✓ Disponible</div>
+                ${optionsHTML}
+                <button class="btn-add-cart" onclick="addToCart(${product.id})">Añadir al Carrito</button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function updatePrice(productId) {
+    const selectedRadio = document.querySelector(`input[name="decant-${productId}"]:checked`);
+    if(selectedRadio) {
+        const price = parseFloat(selectedRadio.getAttribute('data-price'));
+        const priceElement = document.getElementById(`price-${productId}`);
+        if(priceElement) priceElement.textContent = `$${price.toFixed(2)}`;
+    }
+}
+
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const selectedRadio = document.querySelector(`input[name="decant-${productId}"]:checked`);
+    
+    if (!selectedRadio) return; 
+
+    let selectedSize = selectedRadio.value;
+    if(!isNaN(selectedSize)) {
+        selectedSize += "ml";
+    }
+
+    const selectedPrice = parseFloat(selectedRadio.getAttribute('data-price'));
+    const cartItemId = `${productId}-${selectedSize}`;
+    const existing = cart.find(item => item.id === cartItemId);
+    
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({
+            id: cartItemId,
+            name: `${product.name} (${selectedSize})`,
+            price: selectedPrice,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
+    updateCartCount();
+    
+    // Animación botón
+    const btn = event.target;
+    const originalText = btn.innerText;
+    btn.innerText = "¡Añadido! ✓";
+    btn.style.backgroundColor = "#4CAF50";
+    setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.backgroundColor = "";
+    }, 1500);
+
+    const cartPanel = document.getElementById('cart-panel');
+    if (!cartPanel.classList.contains('active')) {
+        toggleCart();
+    } else {
+        updateCartDisplay();
+    }
+}
+
+function updateCartCount() {
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    const badge = document.getElementById('cart-count');
+    if(badge) badge.textContent = count;
+}
+
+function updateCartDisplay() {
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    if (!cartItems) return;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
+        if(cartTotal) cartTotal.textContent = '$0.00';
+        return;
+    }
+    
+    cartItems.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <div class="cart-item-info">
+                <h4>${item.name}</h4>
+                <p>Cantidad: ${item.quantity}</p>
+            </div>
+            <div>
+                <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                <button onclick="removeFromCart('${item.id}')" style="background: none; border: none; color: #dab469; cursor: pointer; font-size: 11px; text-decoration: underline; margin-top:5px;">Eliminar</button>
+            </div>
+        `;
+        cartItems.appendChild(cartItem);
+    });
+    if(cartTotal) cartTotal.textContent = '$' + total.toFixed(2);
+}
+
+function removeFromCart(cartItemId) {
+    cart = cart.filter(item => item.id !== cartItemId);
+    localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
+    updateCartCount();
+    updateCartDisplay();
+}
+
+function toggleCart() {
+    const panel = document.getElementById('cart-panel');
+    if(panel) {
+        panel.classList.toggle('active');
+        if (panel.classList.contains('active')) updateCartDisplay();
+    }
+}
+
+function filterProducts(category) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    const btnClicked = event.target.closest('.filter-btn');
+    if(btnClicked) btnClicked.classList.add('active');
+
+    if (category === 'all') {
+        renderProducts(products);
+    } else {
+        renderProducts(products.filter(p => p.category === category));
+    }
+}
+
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) section.scrollIntoView({ behavior: 'smooth' });
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    alert(`Total a pagar: $${total.toFixed(2)}\n\n(Aquí iría la pasarela de pago real)`);
+    cart = [];
+    localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
+    updateCartCount();
+    updateCartDisplay();
+    toggleCart();
+}
