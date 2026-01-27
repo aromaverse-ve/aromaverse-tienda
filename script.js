@@ -7,8 +7,9 @@ const products = [
         gender: "Unisex",
         rating: 4.8,
         reviews: 210,
-        description: "Una explosión dulce y cremosa de orquídea, heliotropo y notas tropicales. Suave e irresistible.",
+        description: "Una explosión dulce y cremosa de orquídea, heliotropo y notas tropicales.",
         price: 35.00,
+        image: "yara.jpg",
         decants: [
             { ml: 5, price: 6.00 },
             { ml: 10, price: 10.00 },
@@ -22,8 +23,9 @@ const products = [
         gender: "Hombre",
         rating: 4.9,
         reviews: 150,
-        description: "Frescura acuática intensa con un fondo oscuro y seductor de especias y maderas modernas.",
+        description: "Frescura acuática intensa con un fondo oscuro y seductor.",
         price: 45.00,
+        image: "hawas.jpg",
         decants: [
             { ml: 5, price: 8.00 },
             { ml: 10, price: 14.00 },
@@ -37,8 +39,9 @@ const products = [
         gender: "Mujer",
         rating: 4.7,
         reviews: 85,
-        description: "Elegancia dorada con una mezcla brillante de pera fresca, rosa, sándalo y almizcle.",
+        description: "Elegancia dorada con una mezcla brillante de pera fresca, rosa y sándalo.",
         price: 52.00,
+        image: "wisal.jpg",
         decants: [
             { ml: 5, price: 9.00 },
             { ml: 10, price: 16.00 },
@@ -52,8 +55,9 @@ const products = [
         gender: "Mujer",
         rating: 4.8,
         reviews: 190,
-        description: "Un aroma gourmand adictivo con notas de cacao rico, vainilla y bayas rojas azucaradas.",
+        description: "Un aroma gourmand adictivo con notas de cacao rico, vainilla y bayas.",
         price: 40.00,
+        image: "nebras.jpg",
         decants: [
             { ml: 5, price: 7.00 },
             { ml: 10, price: 12.00 },
@@ -67,8 +71,9 @@ const products = [
         gender: "Unisex",
         rating: 4.9,
         reviews: 320,
-        description: "Opulencia amaderada equilibrada con un corazón dulce de ámbar y frutas maduras.",
+        description: "Opulencia amaderada equilibrada con un corazón dulce de ámbar.",
         price: 48.00,
+        image: "amber.jpg",
         decants: [
             { ml: 5, price: 8.50 },
             { ml: 10, price: 15.00 },
@@ -82,8 +87,9 @@ const products = [
         gender: "Hombre",
         rating: 4.6,
         reviews: 45,
-        description: "La esencia pura y tradicional del Oud. Maderas profundas para una presencia imponente.",
+        description: "La esencia pura y tradicional del Oud. Maderas profundas.",
         price: 55.00,
+        image: "dahn.jpg",
         decants: [
             { ml: 5, price: 9.50 },
             { ml: 10, price: 17.00 },
@@ -97,8 +103,9 @@ const products = [
         gender: "Unisex",
         rating: 4.9,
         reviews: 400,
-        description: "La calidez de la canela y los dátiles envuelta en un almizcle blanco cremoso y limpio.",
+        description: "La calidez de la canela y los dátiles envuelta en un almizcle blanco.",
         price: 38.00,
+        image: "khamrah.jpg",
         decants: [
             { ml: 5, price: 7.00 },
             { ml: 10, price: 12.00 },
@@ -112,8 +119,9 @@ const products = [
         gender: "Mujer",
         rating: 4.5,
         reviews: 60,
-        description: "Una mezcla oriental luminosa y sofisticada de azafrán, ámbar y notas florales exóticas.",
+        description: "Una mezcla oriental luminosa de azafrán, ámbar y notas florales.",
         price: 42.00,
+        image: "noor.jpg",
         decants: [
             { ml: 5, price: 7.50 },
             { ml: 10, price: 13.00 },
@@ -127,8 +135,9 @@ const products = [
         gender: "Hombre",
         rating: 4.8,
         reviews: 110,
-        description: "Limpio, verde y jabonoso. Una interpretación fresca, cítrica y moderna del vetiver clásico.",
+        description: "Limpio, verde y jabonoso. Interpretación fresca del vetiver clásico.",
         price: 95.00,
+        image: "vetiver.jpg",
         decants: [
             { ml: 5, price: 16.00 },
             { ml: 10, price: 29.00 },
@@ -142,8 +151,9 @@ const products = [
         gender: "Hombre",
         rating: 4.7,
         reviews: 280,
-        description: "Ambiente de club privado con notas embriagadoras de ron, tabaco y vainilla cálida.",
+        description: "Ambiente de club privado con ron, tabaco y vainilla cálida.",
         price: 85.00,
+        image: "jazz.jpg",
         decants: [
             { ml: 5, price: 14.00 },
             { ml: 10, price: 26.00 },
@@ -157,8 +167,9 @@ const products = [
         gender: "Unisex",
         rating: 4.6,
         reviews: 95,
-        description: "Brisa marina auténtica. Sal, limón y algas que evocan un día perfecto en la costa.",
+        description: "Brisa marina auténtica. Sal, limón y algas.",
         price: 78.00,
+        image: "selmarin.jpg",
         decants: [
             { ml: 5, price: 13.00 },
             { ml: 10, price: 24.00 },
@@ -172,8 +183,9 @@ const products = [
         gender: "Hombre",
         rating: 4.9,
         reviews: 500,
-        description: "Cardamomo, manzana y vainilla. Un aroma nicho seductor y extremadamente versátil.",
+        description: "Cardamomo, manzana y vainilla. Seductor y versátil.",
         price: 88.00,
+        image: "layton.jpg",
         decants: [
             { ml: 5, price: 15.00 },
             { ml: 10, price: 28.00 },
@@ -187,8 +199,9 @@ const products = [
         gender: "Unisex",
         rating: 4.8,
         reviews: 600,
-        description: "Hojas de tabaco ricas y especiadas fusionadas con vainilla cremosa, cacao y frutos secos.",
+        description: "Hojas de tabaco ricas, vainilla cremosa y frutos secos.",
         price: 92.00,
+        image: "tobacco.jpg",
         decants: [
             { ml: 5, price: 16.00 },
             { ml: 10, price: 29.00 },
@@ -202,8 +215,9 @@ const products = [
         gender: "Hombre",
         rating: 4.7,
         reviews: 70,
-        description: "Sofisticación pura. Incienso de Omán mezclado magistralmente con peonía y vetiver seco.",
+        description: "Sofisticación pura. Incienso de Omán, peonía y vetiver seco.",
         price: 98.00,
+        image: "dia.jpg",
         decants: [
             { ml: 5, price: 17.00 },
             { ml: 10, price: 30.00 },
@@ -217,21 +231,17 @@ const products = [
 let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Cargando tienda...");
     renderProducts(products); 
     updateCartCount();
 });
 
 function renderProducts(productsToShow) {
     const grid = document.getElementById('products-grid');
-    if(!grid) {
-        console.error("No encuentro el grid de productos");
-        return;
-    }
+    if(!grid) return;
     grid.innerHTML = '';
     
     if (productsToShow.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron productos.</p>';
+        grid.innerHTML = '<p style="padding:20px;">No se encontraron productos.</p>';
         return;
     }
 
@@ -247,18 +257,18 @@ function renderProducts(productsToShow) {
         if(product.category === 'trending') catLabel = 'Trending 🔥';
         else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
         
-        // CONSTRUCCIÓN DE OPCIONES
-        let optionsHTML = '<div class="decants-section"><label>Selecciona formato:</label><div class="decants-options">';
+        // 1. Crear opciones (Botella + Decants)
+        let optionsHTML = '<div class="decants-section"><label>Formato:</label><div class="decants-options">';
         
-        // 1. Botella (Seleccionada por defecto con 'checked')
+        // Botella (Seleccionada por defecto)
         optionsHTML += `
-            <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
+            <label class="decant-option" style="border: 1px solid #dab469; background: #fffcf5;">
                 <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
                 <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
             </label>
         `;
 
-        // 2. Decants
+        // Decants
         product.decants.forEach((decant) => {
             optionsHTML += `
                 <label class="decant-option">
@@ -269,26 +279,31 @@ function renderProducts(productsToShow) {
         });
         optionsHTML += '</div></div>';
         
-        // PRECIO INICIAL (El de la botella)
-        let initialPrice = product.price.toFixed(2);
+        // Imagen del producto (He puesto los nombres placeholder arriba)
+        // IMPORTANTE: Si no has subido la foto 'yara.jpg', saldrá un icono roto. 
+        // Si prefieres que salga el emoji mientras subes fotos, avísame.
+        let imageHTML = `<div class="product-image">🧴</div>`;
+        if(product.image && product.image !== "") {
+             // Si subes las fotos, descomenta la linea de abajo y borra la de arriba
+             // imageHTML = `<div class="product-image"><img src="${product.image}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;"></div>`;
+        }
 
         card.innerHTML = `
-            <div class="product-image">🧴</div>
+            ${imageHTML}
             <div class="product-info">
                 <div class="product-category">${catLabel}</div>
                 <h3 class="product-name">${product.name}</h3>
                 <div class="product-gender">${genderIcon} ${product.gender}</div>
-                <div class="product-rating">⭐ ${product.rating} <span style="color:#aaa; font-size:0.8em">(${product.reviews})</span></div>
+                <div class="product-rating">⭐ ${product.rating}</div>
                 <p class="product-description">${product.description}</p>
                 
                 <div class="product-prices">
                     <div class="price-item">
-                        <span class="price-label">Precio Seleccionado:</span>
-                        <span class="price-value" id="price-${product.id}">$${initialPrice}</span>
+                        <span class="price-label">Precio:</span>
+                        <span class="price-value" id="price-${product.id}">$${product.price.toFixed(2)}</span>
                     </div>
                 </div>
                 
-                <div class="product-stock">✓ Disponible</div>
                 ${optionsHTML}
                 <button class="btn-add-cart" onclick="addToCart(${product.id})">Añadir al Carrito</button>
             </div>
@@ -301,8 +316,8 @@ function updatePrice(productId) {
     const selectedRadio = document.querySelector(`input[name="decant-${productId}"]:checked`);
     if(selectedRadio) {
         const price = parseFloat(selectedRadio.getAttribute('data-price'));
-        const priceElement = document.getElementById(`price-${productId}`);
-        if(priceElement) priceElement.textContent = `$${price.toFixed(2)}`;
+        const priceEl = document.getElementById(`price-${productId}`);
+        if(priceEl) priceEl.textContent = `$${price.toFixed(2)}`;
     }
 }
 
@@ -313,12 +328,11 @@ function addToCart(productId) {
     if (!selectedRadio) return; 
 
     let selectedSize = selectedRadio.value;
-    if(!isNaN(selectedSize)) {
-        selectedSize += "ml";
-    }
+    if(!isNaN(selectedSize)) selectedSize += "ml"; // Si es numero, agrega 'ml'
 
     const selectedPrice = parseFloat(selectedRadio.getAttribute('data-price'));
     const cartItemId = `${productId}-${selectedSize}`;
+    
     const existing = cart.find(item => item.id === cartItemId);
     
     if (existing) {
@@ -335,22 +349,14 @@ function addToCart(productId) {
     localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
     updateCartCount();
     
-    // Animación botón
     const btn = event.target;
-    const originalText = btn.innerText;
-    btn.innerText = "¡Añadido! ✓";
-    btn.style.backgroundColor = "#4CAF50";
-    setTimeout(() => {
-        btn.innerText = originalText;
-        btn.style.backgroundColor = "";
-    }, 1500);
-
-    const cartPanel = document.getElementById('cart-panel');
-    if (!cartPanel.classList.contains('active')) {
-        toggleCart();
-    } else {
-        updateCartDisplay();
-    }
+    const oldText = btn.innerText;
+    btn.innerText = "¡Listo! ✓";
+    setTimeout(() => { btn.innerText = oldText; }, 1000);
+    
+    const panel = document.getElementById('cart-panel');
+    if(panel && !panel.classList.contains('active')) toggleCart();
+    else updateCartDisplay();
 }
 
 function updateCartCount() {
@@ -375,65 +381,56 @@ function updateCartDisplay() {
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <div class="cart-item-info">
-                <h4>${item.name}</h4>
-                <p>Cantidad: ${item.quantity}</p>
-            </div>
-            <div>
-                <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
-                <button onclick="removeFromCart('${item.id}')" style="background: none; border: none; color: #dab469; cursor: pointer; font-size: 11px; text-decoration: underline; margin-top:5px;">Eliminar</button>
-            </div>
-        `;
-        cartItems.appendChild(cartItem);
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>Cantidad: ${item.quantity}</p>
+                </div>
+                <div>
+                    <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                    <button onclick="removeFromCart('${item.id}')" style="border:none; background:none; color:#dab469; cursor:pointer; text-decoration:underline; font-size:12px;">Eliminar</button>
+                </div>
+            </div>`;
     });
     if(cartTotal) cartTotal.textContent = '$' + total.toFixed(2);
 }
 
-function removeFromCart(cartItemId) {
-    cart = cart.filter(item => item.id !== cartItemId);
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
     localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
     updateCartCount();
     updateCartDisplay();
 }
 
 function toggleCart() {
-    const panel = document.getElementById('cart-panel');
-    if(panel) {
-        panel.classList.toggle('active');
-        if (panel.classList.contains('active')) updateCartDisplay();
+    const p = document.getElementById('cart-panel');
+    if(p) {
+        p.classList.toggle('active');
+        if(p.classList.contains('active')) updateCartDisplay();
     }
 }
 
-function filterProducts(category) {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    const btnClicked = event.target.closest('.filter-btn');
-    if(btnClicked) btnClicked.classList.add('active');
-
-    if (category === 'all') {
-        renderProducts(products);
-    } else {
-        renderProducts(products.filter(p => p.category === category));
-    }
-}
-
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) section.scrollIntoView({ behavior: 'smooth' });
+function filterProducts(cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if(event && event.target) event.target.closest('.filter-btn').classList.add('active');
+    
+    if (cat === 'all') renderProducts(products);
+    else renderProducts(products.filter(p => p.category === cat));
 }
 
 function checkout() {
-    if (cart.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-    }
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    alert(`Total a pagar: $${total.toFixed(2)}\n\n(Aquí iría la pasarela de pago real)`);
+    if(cart.length === 0) return alert("Carrito vacío");
+    const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+    alert(`Total: $${total.toFixed(2)} - ¡Gracias por tu compra!`);
     cart = [];
     localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
     updateCartCount();
     updateCartDisplay();
     toggleCart();
+}
+
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({ behavior: 'smooth' });
 }
