@@ -448,21 +448,38 @@
             else renderProducts(products.filter(p => p.category === cat));
         }
 
-        function checkout() {
-            if(cart.length === 0) return alert("Carrito vacío");
-            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-            alert(`Total: $${total.toFixed(2)} - ¡Gracias por tu compra!`);
-            cart = [];
-            localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
-            updateCartCount();
-            updateCartDisplay();
-            toggleCart();
-        }
+function checkout() {
+    if (cart.length === 0) {
+        alert('Tu carrito está vacío 🛒');
+        return;
+    }
 
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if(el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
-</body>
-</html>
+    // Tu número configurado
+    const phoneNumber = "584242201111"; 
+    
+    let total = 0;
+    let message = "👋 ¡Hola! Vengo de la web y estoy listo para finalizar mi compra en *AromaVerse*.\n\n";
+    message += "📝 *Resumen del Pedido:*\n";
+
+    cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        message += `▪️ ${item.name} x${item.quantity} — $${subtotal.toFixed(2)}\n`;
+    });
+
+    message += `\n💰 *TOTAL A PAGAR: $${total.toFixed(2)}*\n\n`;
+    message += "Quedo atento a los métodos de pago disponibles y detalles de envío. 🚚✨";
+
+    // Codificar el mensaje para URL
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Abrir WhatsApp en una nueva pestaña
+    window.open(whatsappUrl, '_blank');
+    
+    // (Opcional) Limpiar carrito después de enviar, si prefieres que se borre:
+    // cart = [];
+    // localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
+    // updateCartCount();
+    // updateCartDisplay();
+    // toggleCart();
+}
