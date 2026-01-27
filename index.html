@@ -79,6 +79,10 @@
                     <h3>Instagram</h3>
                     <p>@aromaverse.ve</p>
                 </div>
+                <div class="contact-item">
+                    <h3>WhatsApp</h3>
+                    <p>+58 424-2201111</p>
+                </div>
             </div>
         </div>
     </section>
@@ -92,7 +96,7 @@
             <div id="cart-items" class="cart-items"></div>
             <div class="cart-footer">
                 <div class="cart-total">Total: <span id="cart-total">$0.00</span></div>
-                <button class="btn btn-primary" onclick="checkout()">Finalizar Compra</button>
+                <button class="btn btn-primary" onclick="checkout()">Finalizar Compra por WhatsApp</button>
                 <button class="btn btn-secondary" onclick="toggleCart()">Seguir viendo</button>
             </div>
         </div>
@@ -271,7 +275,7 @@
         function renderProducts(productsToShow) {
             const grid = document.getElementById('products-grid');
             if(!grid) return;
-            grid.innerHTML = ''; // Limpiar el "Cargando..."
+            grid.innerHTML = ''; 
             
             if (productsToShow.length === 0) {
                 grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron productos.</p>';
@@ -448,38 +452,38 @@
             else renderProducts(products.filter(p => p.category === cat));
         }
 
-function checkout() {
-    if (cart.length === 0) {
-        alert('Tu carrito está vacío 🛒');
-        return;
-    }
+        /* --- AQUÍ ESTÁ LA FUNCIÓN DE WHATSAPP --- */
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío 🛒');
+                return;
+            }
 
-    // Tu número configurado
-    const phoneNumber = "584242201111"; 
-    
-    let total = 0;
-    let message = "👋 ¡Hola! Vengo de la web y estoy listo para finalizar mi compra en *AromaVerse*.\n\n";
-    message += "📝 *Resumen del Pedido:*\n";
+            // Tu número configurado
+            const phoneNumber = "584242201111"; 
+            
+            let total = 0;
+            let message = "👋 ¡Hola! Vengo de la web y estoy listo para finalizar mi compra en *AromaVerse*.\n\n";
+            message += "📝 *Resumen del Pedido:*\n";
 
-    cart.forEach(item => {
-        const subtotal = item.price * item.quantity;
-        total += subtotal;
-        message += `▪️ ${item.name} x${item.quantity} — $${subtotal.toFixed(2)}\n`;
-    });
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                message += `▪️ ${item.name} x${item.quantity} — $${subtotal.toFixed(2)}\n`;
+            });
 
-    message += `\n💰 *TOTAL A PAGAR: $${total.toFixed(2)}*\n\n`;
-    message += "Quedo atento a los métodos de pago disponibles y detalles de envío. 🚚✨";
+            message += `\n💰 *TOTAL A PAGAR: $${total.toFixed(2)}*\n\n`;
+            message += "Quedo atento a los métodos de pago disponibles y detalles de envío. 🚚✨";
 
-    // Codificar el mensaje para URL
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Abrir WhatsApp en una nueva pestaña
-    window.open(whatsappUrl, '_blank');
-    
-    // (Opcional) Limpiar carrito después de enviar, si prefieres que se borre:
-    // cart = [];
-    // localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
-    // updateCartCount();
-    // updateCartDisplay();
-    // toggleCart();
-}
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
