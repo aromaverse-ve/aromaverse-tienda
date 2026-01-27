@@ -6,6 +6,24 @@
     <title>AromaVerse - Tienda Premium</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .product-image {
+            height: 250px; /* Altura fija para la imagen */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Esto evita que la foto se deforme o corte */
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -118,6 +136,7 @@
                 reviews: 210,
                 description: "Una explosión dulce y cremosa de orquídea, heliotropo y notas tropicales.",
                 price: 35.00,
+                image: "yara.jpg",
                 decants: [ { ml: 5, price: 6.00 }, { ml: 10, price: 10.00 }, { ml: 15, price: 14.00 } ]
             },
             {
@@ -129,6 +148,7 @@
                 reviews: 150,
                 description: "Frescura acuática intensa con un fondo oscuro y seductor.",
                 price: 45.00,
+                image: "hawas.jpg",
                 decants: [ { ml: 5, price: 8.00 }, { ml: 10, price: 14.00 }, { ml: 15, price: 19.00 } ]
             },
             {
@@ -140,6 +160,7 @@
                 reviews: 85,
                 description: "Elegancia dorada con una mezcla brillante de pera fresca y rosa.",
                 price: 52.00,
+                image: "wisal.jpg",
                 decants: [ { ml: 5, price: 9.00 }, { ml: 10, price: 16.00 }, { ml: 15, price: 22.00 } ]
             },
             {
@@ -151,6 +172,7 @@
                 reviews: 190,
                 description: "Aroma gourmand adictivo con cacao rico, vainilla y bayas.",
                 price: 40.00,
+                image: "nebras.jpg",
                 decants: [ { ml: 5, price: 7.00 }, { ml: 10, price: 12.00 }, { ml: 15, price: 17.00 } ]
             },
             {
@@ -162,6 +184,7 @@
                 reviews: 320,
                 description: "Opulencia amaderada equilibrada con un corazón dulce de ámbar.",
                 price: 48.00,
+                image: "amber.jpg",
                 decants: [ { ml: 5, price: 8.50 }, { ml: 10, price: 15.00 }, { ml: 15, price: 21.00 } ]
             },
             {
@@ -173,6 +196,7 @@
                 reviews: 45,
                 description: "La esencia pura y tradicional del Oud. Maderas profundas.",
                 price: 55.00,
+                image: "dahn.jpg",
                 decants: [ { ml: 5, price: 9.50 }, { ml: 10, price: 17.00 }, { ml: 15, price: 24.00 } ]
             },
             {
@@ -184,6 +208,7 @@
                 reviews: 400,
                 description: "Canela y dátiles envuelta en un almizcle blanco cremoso.",
                 price: 38.00,
+                image: "khamrah.jpg",
                 decants: [ { ml: 5, price: 7.00 }, { ml: 10, price: 12.00 }, { ml: 15, price: 17.00 } ]
             },
             {
@@ -195,6 +220,7 @@
                 reviews: 60,
                 description: "Mezcla oriental luminosa de azafrán, ámbar y notas florales.",
                 price: 42.00,
+                image: "noor.jpg",
                 decants: [ { ml: 5, price: 7.50 }, { ml: 10, price: 13.00 }, { ml: 15, price: 18.00 } ]
             },
             {
@@ -206,6 +232,7 @@
                 reviews: 110,
                 description: "Limpio, verde y jabonoso. Interpretación fresca del vetiver.",
                 price: 95.00,
+                image: "vetiver.jpg",
                 decants: [ { ml: 5, price: 16.00 }, { ml: 10, price: 29.00 }, { ml: 15, price: 42.00 } ]
             },
             {
@@ -217,6 +244,7 @@
                 reviews: 280,
                 description: "Ambiente de club privado con ron, tabaco y vainilla cálida.",
                 price: 85.00,
+                image: "jazz.jpg",
                 decants: [ { ml: 5, price: 14.00 }, { ml: 10, price: 26.00 }, { ml: 15, price: 38.00 } ]
             },
             {
@@ -228,6 +256,7 @@
                 reviews: 95,
                 description: "Brisa marina auténtica. Sal, limón y algas.",
                 price: 78.00,
+                image: "selmarin.jpg",
                 decants: [ { ml: 5, price: 13.00 }, { ml: 10, price: 24.00 }, { ml: 15, price: 35.00 } ]
             },
             {
@@ -239,6 +268,7 @@
                 reviews: 500,
                 description: "Cardamomo, manzana y vainilla. Seductor y versátil.",
                 price: 88.00,
+                image: "layton.jpg",
                 decants: [ { ml: 5, price: 15.00 }, { ml: 10, price: 28.00 }, { ml: 15, price: 40.00 } ]
             },
             {
@@ -250,6 +280,7 @@
                 reviews: 600,
                 description: "Hojas de tabaco ricas, vainilla cremosa y frutos secos.",
                 price: 92.00,
+                image: "tobacco.jpg",
                 decants: [ { ml: 5, price: 16.00 }, { ml: 10, price: 29.00 }, { ml: 15, price: 42.00 } ]
             },
             {
@@ -261,6 +292,7 @@
                 reviews: 70,
                 description: "Sofisticación pura. Incienso de Omán, peonía y vetiver seco.",
                 price: 98.00,
+                image: "dia.jpg",
                 decants: [ { ml: 5, price: 17.00 }, { ml: 10, price: 30.00 }, { ml: 15, price: 44.00 } ]
             }
         ];
@@ -268,7 +300,6 @@
         /* --- LÓGICA DE LA TIENDA --- */
         let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
 
-        // Iniciamos la tienda manualmente al cargar la página
         renderProducts(products); 
         updateCartCount();
 
@@ -293,11 +324,15 @@
                 let catLabel = 'Nicho';
                 if(product.category === 'trending') catLabel = 'Trending 🔥';
                 else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
+
+                // --- AQUÍ ESTÁ EL CAMBIO PARA LAS IMÁGENES ---
+                // Si la imagen existe, la usa. Si no, usa el emoji como respaldo.
+                let imageHTML = `<div class="product-image">🧴</div>`;
+                if(product.image && product.image !== "") {
+                    imageHTML = `<div class="product-image"><img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.parentNode.innerHTML='🧴';"></div>`;
+                }
                 
-                // OPCIONES (Botella + Decants)
                 let optionsHTML = '<div class="decants-section"><label>Formato:</label><div class="decants-options">';
-                
-                // 1. Botella (Seleccionada por defecto)
                 optionsHTML += `
                     <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
                         <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
@@ -305,7 +340,6 @@
                     </label>
                 `;
 
-                // 2. Decants
                 product.decants.forEach((decant) => {
                     optionsHTML += `
                         <label class="decant-option">
@@ -317,7 +351,7 @@
                 optionsHTML += '</div></div>';
                 
                 card.innerHTML = `
-                    <div class="product-image">🧴</div>
+                    ${imageHTML}
                     <div class="product-info">
                         <div class="product-category">${catLabel}</div>
                         <h3 class="product-name">${product.name}</h3>
@@ -452,14 +486,12 @@
             else renderProducts(products.filter(p => p.category === cat));
         }
 
-        /* --- AQUÍ ESTÁ LA FUNCIÓN DE WHATSAPP --- */
         function checkout() {
             if (cart.length === 0) {
                 alert('Tu carrito está vacío 🛒');
                 return;
             }
 
-            // Tu número configurado
             const phoneNumber = "584242201111"; 
             
             let total = 0;
