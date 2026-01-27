@@ -1,4 +1,4 @@
-/* --- BASE DE DATOS DE PRODUCTOS (Actualizada con decants de 5, 10 y 15ml) --- */
+/* --- BASE DE DATOS DE PRODUCTOS --- */
 const products = [
     {
         id: 1,
@@ -243,18 +243,33 @@ function renderProducts(productsToShow) {
         if(product.category === 'trending') catLabel = 'Trending 🔥';
         else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
         
-        // Generar opciones de decants (5, 10, 15ml)
-        let decantsHTML = '<div class="decants-section"><label>Tamaño:</label><div class="decants-options">';
+        // CONSTRUCCIÓN DE OPCIONES (BOTELLA + DECANTS)
+        let optionsHTML = '<div class="decants-section"><label>Selecciona formato:</label><div class="decants-options">';
+        
+        // 1. PRIMERA OPCIÓN: BOTELLA COMPLETA
+        optionsHTML += `
+            <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
+                <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" onchange="updatePrice(${product.id})">
+                <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
+            </label>
+        `;
+
+        // 2. OPCIONES DE DECANTS
         product.decants.forEach((decant, index) => {
-            decantsHTML += `
+            // El primer decant (5ml) estará seleccionado por defecto (checked)
+            // Si prefieres que nada esté seleccionado, quita ${index === 0 ? 'checked' : ''}
+            optionsHTML += `
                 <label class="decant-option">
                     <input type="radio" name="decant-${product.id}" value="${decant.ml}" data-price="${decant.price}" ${index === 0 ? 'checked' : ''} onchange="updatePrice(${product.id})">
                     <span class="decant-label">${decant.ml}ml - $${decant.price.toFixed(2)}</span>
                 </label>
             `;
         });
-        decantsHTML += '</div></div>';
+        optionsHTML += '</div></div>';
         
+        // PRECIO INICIAL (El del primer decant seleccionado por defecto)
+        let initialPrice = product.decants[0].price.toFixed(2);
+
         card.innerHTML = `
             <div class="product-image">🧴</div>
             <div class="product-info">
@@ -263,18 +278,16 @@ function renderProducts(productsToShow) {
                 <div class="product-gender">${genderIcon} ${product.gender}</div>
                 <div class="product-rating">⭐ ${product.rating} <span style="color:#aaa; font-size:0.8em">(${product.reviews})</span></div>
                 <p class="product-description">${product.description}</p>
+                
                 <div class="product-prices">
                     <div class="price-item">
-                        <span class="price-label">Botella Completa:</span>
-                        <span class="price-value">$${product.price.toFixed(2)}</span>
-                    </div>
-                    <div class="price-item">
-                        <span class="price-label">Decant Seleccionado:</span>
-                        <span class="price-value" id="price-${product.id}">$${product.decants[0].price.toFixed(2)}</span>
+                        <span class="price-label">Precio Seleccionado:</span>
+                        <span class="price-value" id="price-${product.id}">$${initialPrice}</span>
                     </div>
                 </div>
+                
                 <div class="product-stock">✓ Disponible</div>
-                ${decantsHTML}
+                ${optionsHTML}
                 <button class="btn-add-cart" onclick="addToCart(${product.id})">Añadir al Carrito</button>
             </div>
         `;
@@ -296,10 +309,17 @@ function addToCart(productId) {
     
     if (!selectedRadio) return; 
 
-    const selectedMl = selectedRadio.value;
+    // Aquí capturamos si es "Botella" o "5" (ml)
+    let selectedSize = selectedRadio.value;
+    
+    // Si es un número, le agregamos "ml", si es "Botella", lo dejamos así
+    if(!isNaN(selectedSize)) {
+        selectedSize += "ml";
+    }
+
     const selectedPrice = parseFloat(selectedRadio.getAttribute('data-price'));
     
-    const cartItemId = `${productId}-${selectedMl}ml`;
+    const cartItemId = `${productId}-${selectedSize}`;
     const existing = cart.find(item => item.id === cartItemId);
     
     if (existing) {
@@ -307,7 +327,7 @@ function addToCart(productId) {
     } else {
         cart.push({
             id: cartItemId,
-            name: `${product.name} (${selectedMl}ml)`,
+            name: `${product.name} (${selectedSize})`,
             price: selectedPrice,
             quantity: 1
         });
@@ -316,6 +336,7 @@ function addToCart(productId) {
     localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
     updateCartCount();
     
+    // Feedback visual
     const btn = event.target;
     const originalText = btn.innerText;
     btn.innerText = "¡Añadido! ✓";
@@ -416,7 +437,7 @@ function checkout() {
         return;
     }
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    alert(`Total a pagar: $${total.toFixed(2)}\n\n(Aquí iría la integración con WhatsApp o Stripe)`);
+    alert(`Total a pagar: $${total.toFixed(2)}\n\n(Aquí iría la pasarela de pago real)`);
     cart = [];
     localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
     updateCartCount();
