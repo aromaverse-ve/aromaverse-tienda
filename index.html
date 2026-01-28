@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AromaVerse - Tienda Premium</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Ajuste de imágenes */
+        /* --- ESTILOS GENERALES Y IMÁGENES --- */
         .product-image {
             height: 250px;
             overflow: hidden;
@@ -26,21 +26,20 @@
             transition: transform 0.3s ease;
         }
         .product-card:hover .product-image img {
-            transform: scale(1.05); /* Zoom sutil al pasar el mouse */
+            transform: scale(1.05);
         }
 
-        /* ESTILOS DEL BUSCADOR */
+        /* --- ESTILOS DEL BUSCADOR --- */
         .search-container {
             max-width: 600px;
-            margin: 0 auto 30px auto; /* Centrado y separado de abajo */
+            margin: 0 auto 20px auto;
             position: relative;
             padding: 0 20px;
         }
-        
         .search-input {
             width: 100%;
             padding: 15px 20px;
-            padding-left: 45px; /* Espacio para el icono */
+            padding-left: 45px;
             font-size: 16px;
             border: 2px solid #eee;
             border-radius: 50px;
@@ -49,13 +48,11 @@
             font-family: 'Lato', sans-serif;
             background-color: #f9f9f9;
         }
-
         .search-input:focus {
             border-color: var(--gold);
             background-color: #fff;
             box-shadow: 0 4px 15px rgba(218, 180, 105, 0.2);
         }
-
         .search-icon {
             position: absolute;
             left: 35px;
@@ -64,6 +61,52 @@
             color: #aaa;
             font-size: 18px;
         }
+
+        /* --- NUEVOS ESTILOS DE FILTROS (DOBLE FILA) --- */
+        .filters-container {
+            margin-bottom: 40px;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .filter-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px; /* Espacio entre botones */
+            margin-bottom: 12px; /* Espacio entre la fila 1 y la fila 2 */
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--gold);
+            color: white;
+            border-color: var(--gold);
+            box-shadow: 0 4px 10px rgba(218, 180, 105, 0.3);
+        }
+
+        /* Etiqueta pequeña "Género:" */
+        .filter-label-inline {
+            font-size: 12px;
+            color: #aaa;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -99,11 +142,21 @@
             <input type="text" class="search-input" placeholder="Buscar perfume (ej. Yara, Oud, Creed)..." oninput="searchProducts(this.value)">
         </div>
 
-        <div class="filters">
-            <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
-            <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
-            <button class="filter-btn" onclick="filterProducts('arabic')">Árabes</button>
-            <button class="filter-btn" onclick="filterProducts('niche')">Nicho</button>
+        <div class="filters-container">
+            <div class="filter-row">
+                <button class="filter-btn active" onclick="filterProducts('all')" style="font-weight: bold;">Todos</button>
+                
+                <button class="filter-btn" onclick="filterProducts('trending')">Trending 🔥</button>
+                <button class="filter-btn" onclick="filterProducts('arabic')">Árabes 🕌</button>
+                <button class="filter-btn" onclick="filterProducts('niche')">Nicho 💎</button>
+            </div>
+
+            <div class="filter-row">
+                <span class="filter-label-inline">Género:</span>
+                <button class="filter-btn" onclick="filterProducts('Hombre')">Hombre 👨</button>
+                <button class="filter-btn" onclick="filterProducts('Mujer')">Mujer 👩</button>
+                <button class="filter-btn" onclick="filterProducts('Unisex')">Unisex 👥</button>
+            </div>
         </div>
 
         <div class="products-grid" id="products-grid">
@@ -175,15 +228,14 @@
         const products = [
             {
                 id: 1,
-                name: "Colección Viral Lattafa (Yara & Asad)", // Nombre actualizado
+                name: "Colección Viral Lattafa (Yara & Asad)",
                 category: "trending",
                 gender: "Unisex",
                 rating: 4.9,
                 reviews: 530,
-                // Nueva descripción estratégica 👇
                 description: "La colección completa de 7 íconos. Desde la dulzura de Yara hasta la potencia de Asad. Al finalizar, indícanos el color que deseas. ¿Indeciso? ¡Pídelo y recibe asesoría olfativa gratuita para elegir tu ideal!",
                 price: 35.00,
-                image: "yara.jpg", // Asegúrate que esta foto sea la grupal que mencionaste
+                image: "yara.jpg",
                 decants: [ { ml: 5, price: 6.00 }, { ml: 10, price: 10.00 }, { ml: 15, price: 14.00 } ]
             },
             {
@@ -346,9 +398,7 @@
 
         /* --- LÓGICA DE LA TIENDA --- */
         let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
-        // Guardamos una copia de todos los productos para el filtrado
-        let currentProducts = [...products];
-
+        
         // Inicializar
         renderProducts(products); 
         updateCartCount();
@@ -357,21 +407,49 @@
         function searchProducts(query) {
             const term = query.toLowerCase();
             
-            // Si el buscador está vacío, mostramos todo (o respetamos la categoría actual)
+            // Si el buscador está vacío
             if(term === '') {
                 renderProducts(products);
-                // Resetear botones de filtro visualmente
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.filter-btn:first-child').classList.add('active');
+                document.querySelector('.filter-btn:first-child').classList.add('active'); // Activa "Todos"
                 return;
             }
 
             // Filtrar por nombre
             const filtered = products.filter(p => p.name.toLowerCase().includes(term));
             
-            // Quitar clase activa de los botones porque estamos buscando manualmente
+            // Quitar clase activa de los filtros
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             
+            renderProducts(filtered);
+        }
+
+        /* --- NUEVA FUNCIÓN DE FILTRADO (CATEGORÍAS + GÉNERO) --- */
+        function filterProducts(criteria) {
+            // 1. Limpiar buscador visualmente
+            const searchInput = document.querySelector('.search-input');
+            if(searchInput) searchInput.value = '';
+            
+            // 2. Gestionar botones activos (Visual)
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if(event && event.target) event.target.classList.add('active');
+
+            // 3. Lógica de filtrado
+            let filtered = [];
+
+            if (criteria === 'all') {
+                filtered = products;
+            } 
+            else if (['Hombre', 'Mujer', 'Unisex'].includes(criteria)) {
+                // Filtro por Género
+                filtered = products.filter(p => p.gender === criteria);
+            } 
+            else {
+                // Filtro por Categoría
+                filtered = products.filter(p => p.category === criteria);
+            }
+
+            // 4. Renderizar
             renderProducts(filtered);
         }
 
@@ -381,7 +459,7 @@
             grid.innerHTML = ''; 
             
             if (productsToShow.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666; font-size: 1.1em;">No encontramos perfumes con ese nombre 🔍</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666; font-size: 1.1em;">No encontramos perfumes con ese filtro 🔍</p>';
                 return;
             }
 
@@ -492,8 +570,7 @@
             }, 1000);
             
             const panel = document.getElementById('cart-panel');
-            if(panel && !panel.classList.contains('active')) toggleCart();
-            else updateCartDisplay();
+            if(panel && panel.classList.contains('active')) updateCartDisplay();
         }
 
         function updateCartCount() {
@@ -546,17 +623,6 @@
                 p.classList.toggle('active');
                 if(p.classList.contains('active')) updateCartDisplay();
             }
-        }
-
-        function filterProducts(cat) {
-            // Limpiamos el buscador si alguien usa un filtro
-            document.querySelector('.search-input').value = '';
-            
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if(event && event.target) event.target.closest('.filter-btn').classList.add('active');
-            
-            if (cat === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.category === cat));
         }
 
         function checkout() {
