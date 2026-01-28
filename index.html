@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Ajuste de imágenes */
         .product-image {
-            height: 250px; /* Altura fija para la imagen */
+            height: 250px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -20,8 +21,48 @@
         .product-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Esto evita que la foto se deforme o corte */
+            object-fit: contain;
             padding: 10px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.05); /* Zoom sutil al pasar el mouse */
+        }
+
+        /* ESTILOS DEL BUSCADOR */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px auto; /* Centrado y separado de abajo */
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 45px; /* Espacio para el icono */
+            font-size: 16px;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold);
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(218, 180, 105, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -53,6 +94,11 @@
     <section class="shop container">
         <h2>Nuestros Perfumes</h2>
         
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Buscar perfume (ej. Yara, Oud, Creed)..." oninput="searchProducts(this.value)">
+        </div>
+
         <div class="filters">
             <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
             <button class="filter-btn" onclick="filterProducts('trending')">Trending</button>
@@ -299,9 +345,34 @@
 
         /* --- LÓGICA DE LA TIENDA --- */
         let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
+        // Guardamos una copia de todos los productos para el filtrado
+        let currentProducts = [...products];
 
+        // Inicializar
         renderProducts(products); 
         updateCartCount();
+
+        /* --- FUNCIÓN DEL BUSCADOR --- */
+        function searchProducts(query) {
+            const term = query.toLowerCase();
+            
+            // Si el buscador está vacío, mostramos todo (o respetamos la categoría actual)
+            if(term === '') {
+                renderProducts(products);
+                // Resetear botones de filtro visualmente
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.filter-btn:first-child').classList.add('active');
+                return;
+            }
+
+            // Filtrar por nombre
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            
+            // Quitar clase activa de los botones porque estamos buscando manualmente
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            
+            renderProducts(filtered);
+        }
 
         function renderProducts(productsToShow) {
             const grid = document.getElementById('products-grid');
@@ -309,7 +380,7 @@
             grid.innerHTML = ''; 
             
             if (productsToShow.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron productos.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666; font-size: 1.1em;">No encontramos perfumes con ese nombre 🔍</p>';
                 return;
             }
 
@@ -325,8 +396,6 @@
                 if(product.category === 'trending') catLabel = 'Trending 🔥';
                 else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
 
-                // --- AQUÍ ESTÁ EL CAMBIO PARA LAS IMÁGENES ---
-                // Si la imagen existe, la usa. Si no, usa el emoji como respaldo.
                 let imageHTML = `<div class="product-image">🧴</div>`;
                 if(product.image && product.image !== "") {
                     imageHTML = `<div class="product-image"><img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.parentNode.innerHTML='🧴';"></div>`;
@@ -479,6 +548,9 @@
         }
 
         function filterProducts(cat) {
+            // Limpiamos el buscador si alguien usa un filtro
+            document.querySelector('.search-input').value = '';
+            
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if(event && event.target) event.target.closest('.filter-btn').classList.add('active');
             
