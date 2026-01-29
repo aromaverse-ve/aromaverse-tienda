@@ -3,293 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aromaverse - Perfumes Importados</title>
+    <title>Aromaverse</title>
     <style>
-        /* =========================================
-           1. ESTILOS GENERALES (BASE)
-           ========================================= */
-        * {
+        /* --- ESTILOS BASE (ESTÉTICA ORIGINAL CLARA) --- */
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f4f4;
+            background-color: #f4f4f4; /* Fondo claro original */
             color: #333;
-            line-height: 1.6;
         }
 
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-
-        /* =========================================
-           2. HEADER (MENÚ DE NAVEGACIÓN)
-           ========================================= */
+        /* --- HEADER (MENÚ DE NAVEGACIÓN) --- */
         header {
-            background-color: #111; /* Negro elegante */
-            color: #d4af37; /* Dorado */
-            padding: 15px 40px;
+            background-color: #333; /* Barra oscura estándar */
+            color: #fff;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         .logo h1 {
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #d4af37;
             margin: 0;
+            font-size: 1.5rem;
+            /* Solo dice Aromaverse */
         }
 
-        /* Menú central */
         nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
             display: flex;
-            gap: 30px;
         }
 
-        nav a {
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
             color: #fff;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        nav a:hover {
-            color: #d4af37;
-        }
-
-        /* Carrito */
-        .cart-widget {
-            position: relative;
+        .cart-icon {
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 1.2rem;
-            color: #fff;
-        }
-        
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -10px;
-            background-color: #d4af37;
-            color: #000;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 50%;
         }
 
-        /* =========================================
-           3. HERO SECTION (BANNER PRINCIPAL)
-           ========================================= */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/1600x900/?perfume,bottle'); /* Imagen genérica de fondo */
-            background-size: cover;
-            background-position: center;
-            height: 60vh; /* Altura del banner */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 20px;
-        }
-
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            max-width: 600px;
-        }
-
-        .btn-hero {
-            background-color: #d4af37;
-            color: #000;
-            padding: 12px 30px;
-            font-weight: bold;
-            border-radius: 30px;
-            transition: transform 0.3s, background 0.3s;
-        }
-
-        .btn-hero:hover {
-            background-color: #fff;
-            transform: scale(1.05);
-        }
-
-        /* =========================================
-           4. CATÁLOGO DE PRODUCTOS
-           ========================================= */
-        .catalog-section {
+        /* --- CONTENEDOR DE PRODUCTOS --- */
+        .container {
             max-width: 1200px;
-            margin: 50px auto;
+            margin: 20px auto;
             padding: 0 20px;
         }
 
-        .section-header {
+        h2 {
             text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-bottom: 40px;
         }
 
-        .section-header h3 {
-            font-size: 2rem;
-            color: #111;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .section-header hr {
-            width: 80px;
-            height: 3px;
-            background-color: #d4af37;
-            border: none;
-            margin: 0 auto;
-        }
-
-        /* GRID SYSTEM */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        /* TARJETA DE PRODUCTO */
+        /* --- TARJETA DE PRODUCTO (CON SELECTOR) --- */
         .product-card {
-            background: #fff;
-            border: 1px solid #e1e1e1;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transform: translateY(-5px);
-            border-color: #d4af37;
-        }
-
-        .card-img-container {
-            height: 300px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .product-card:hover .card-img-container img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #111;
-        }
-
-        .product-desc {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            color: #d4af37; /* Dorado */
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        /* SELECTOR DE DECANTS */
-        .options-wrapper {
-            margin-bottom: 15px;
-            background: #fafafa;
-            padding: 10px;
+            background-color: #fff; /* Tarjeta blanca */
+            border: 1px solid #ddd;
             border-radius: 5px;
-            border: 1px solid #eee;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .options-wrapper label {
-            display: block;
-            font-size: 0.85rem;
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .product-info {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info h3 {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .price {
+            color: #B8860B; /* Color dorado oscuro para precio */
             font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
-        .decant-select {
+        /* --- SELECTOR DE DECANTS (RECUPERADO) --- */
+        .variant-selector {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .variant-selector label {
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .decant-options {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            outline: none;
         }
 
-        /* BOTÓN DE COMPRA */
-        .btn-add {
-            margin-top: auto;
-            background-color: #d4af37; /* DORADO */
-            color: #fff;
+        /* --- BOTONES (CORREGIDOS: NO NEGROS) --- */
+        .btn-add-cart {
+            margin-top: auto; /* Empuja el botón al fondo */
+            background-color: #B8860B; /* Dorado/Marrón (NO NEGRO) */
+            color: white;
             border: none;
-            padding: 12px;
+            padding: 10px;
             width: 100%;
             font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
             border-radius: 4px;
             transition: background 0.3s;
         }
 
-        .btn-add:hover {
-            background-color: #b5952f; /* Dorado oscuro */
+        .btn-add-cart:hover {
+            background-color: #8B6508; /* Un poco más oscuro al pasar mouse */
         }
 
-        /* =========================================
-           5. FOOTER
-           ========================================= */
         footer {
-            background-color: #111;
-            color: #888;
+            background-color: #333;
+            color: white;
             text-align: center;
-            padding: 40px 20px;
-            font-size: 0.9rem;
+            padding: 1rem;
+            margin-top: 40px;
         }
-
-        footer p span {
-            color: #d4af37;
-        }
-
     </style>
 </head>
 <body>
@@ -301,169 +165,125 @@
         <nav>
             <ul>
                 <li><a href="#">Inicio</a></li>
-                <li><a href="#catalogo">Catálogo</a></li>
-                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Catálogo</a></li>
                 <li><a href="#">Contacto</a></li>
             </ul>
         </nav>
-        <div class="cart-widget">
-            🛒 <span class="cart-count" id="cart-counter">0</span>
-        </div>
+        <div class="cart-icon">🛒 Carrito (0)</div>
     </header>
 
-    <section class="hero">
-        <h2>La Esencia del Lujo</h2>
-        <p>Descubre las mejores fragancias árabes y de diseñador. Disponible en botella completa y decants.</p>
-        <a href="#catalogo" class="btn-hero">Ver Colección</a>
-    </section>
+    <div class="container">
 
-    <div class="catalog-section" id="catalogo">
-        
-        <div class="section-header">
-            <h3>Colección Yara</h3>
-            <hr>
-        </div>
-
-        <div class="products-grid">
+        <h2>Colección Yara</h2>
+        <div class="product-grid">
+            
             <div class="product-card">
-                <div class="card-img-container">
-                    <img src="ruta/yara-rosa.jpg" alt="Yara Rosa">
-                </div>
-                <div class="card-body">
-                    <h4 class="product-title">Lattafa Yara (Rosa)</h4>
-                    <p class="product-desc">Notas dulces, vainilla y orquídea.</p>
-                    <div class="product-price">$45.00</div>
+                <img src="yara-rosa.jpg" alt="Yara Rosa" class="product-image">
+                <div class="product-info">
+                    <h3>Yara Lattafa (Rosa)</h3>
+                    <p class="price">$45.00</p>
                     
-                    <div class="options-wrapper">
-                        <label>Selecciona presentación:</label>
-                        <select class="decant-select">
+                    <div class="variant-selector">
+                        <label>Elige tamaño:</label>
+                        <select class="decant-options">
                             <option value="100ml">Botella 100ml</option>
-                            <option value="10ml">Decant 10ml - $12.00</option>
-                            <option value="5ml">Decant 5ml - $7.00</option>
+                            <option value="10ml">Decant 10ml</option>
+                            <option value="5ml">Decant 5ml</option>
                         </select>
                     </div>
 
-                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                    <button class="btn-add-cart">Añadir al Carrito</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <div class="card-img-container">
-                    <img src="ruta/yara-moi.jpg" alt="Yara Moi">
-                </div>
-                <div class="card-body">
-                    <h4 class="product-title">Yara Moi (Blanco)</h4>
-                    <p class="product-desc">Notas de jazmín, melocotón y caramelo.</p>
-                    <div class="product-price">$45.00</div>
-
-                    <div class="options-wrapper">
-                        <label>Selecciona presentación:</label>
-                        <select class="decant-select">
+                <img src="yara-moi.jpg" alt="Yara Moi" class="product-image">
+                <div class="product-info">
+                    <h3>Yara Moi (Blanco)</h3>
+                    <p class="price">$45.00</p>
+                    
+                    <div class="variant-selector">
+                        <label>Elige tamaño:</label>
+                        <select class="decant-options">
                             <option value="100ml">Botella 100ml</option>
-                            <option value="10ml">Decant 10ml - $12.00</option>
-                            <option value="5ml">Decant 5ml - $7.00</option>
+                            <option value="10ml">Decant 10ml</option>
+                            <option value="5ml">Decant 5ml</option>
                         </select>
                     </div>
 
-                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                    <button class="btn-add-cart">Añadir al Carrito</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <div class="card-img-container">
-                    <img src="ruta/yara-tous.jpg" alt="Yara Tous">
-                </div>
-                <div class="card-body">
-                    <h4 class="product-title">Yara Tous (Naranja)</h4>
-                    <p class="product-desc">Mango, coco y fruta de la pasión.</p>
-                    <div class="product-price">$48.00</div>
-
-                    <div class="options-wrapper">
-                        <label>Selecciona presentación:</label>
-                        <select class="decant-select">
+                <img src="yara-tous.jpg" alt="Yara Tous" class="product-image">
+                <div class="product-info">
+                    <h3>Yara Tous (Naranja)</h3>
+                    <p class="price">$48.00</p>
+                    
+                    <div class="variant-selector">
+                        <label>Elige tamaño:</label>
+                        <select class="decant-options">
                             <option value="100ml">Botella 100ml</option>
-                            <option value="10ml">Decant 10ml - $13.00</option>
-                            <option value="5ml">Decant 5ml - $7.50</option>
+                            <option value="10ml">Decant 10ml</option>
+                            <option value="5ml">Decant 5ml</option>
                         </select>
                     </div>
 
-                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                    <button class="btn-add-cart">Añadir al Carrito</button>
                 </div>
             </div>
+
         </div>
 
-
-        <div class="section-header">
-            <h3>Colección Asad</h3>
-            <hr>
-        </div>
-
-        <div class="products-grid">
+        <h2>Colección Asad</h2>
+        <div class="product-grid">
+            
             <div class="product-card">
-                <div class="card-img-container">
-                    <img src="ruta/asad-black.jpg" alt="Asad Black">
-                </div>
-                <div class="card-body">
-                    <h4 class="product-title">Lattafa Asad (Negro)</h4>
-                    <p class="product-desc">Pimienta negra, piña y tabaco.</p>
-                    <div class="product-price">$40.00</div>
-
-                    <div class="options-wrapper">
-                        <label>Selecciona presentación:</label>
-                        <select class="decant-select">
+                <img src="asad-black.jpg" alt="Asad Negro" class="product-image">
+                <div class="product-info">
+                    <h3>Lattafa Asad (Negro)</h3>
+                    <p class="price">$40.00</p>
+                    
+                    <div class="variant-selector">
+                        <label>Elige tamaño:</label>
+                        <select class="decant-options">
                             <option value="100ml">Botella 100ml</option>
-                            <option value="10ml">Decant 10ml - $10.00</option>
-                            <option value="5ml">Decant 5ml - $6.00</option>
+                            <option value="10ml">Decant 10ml</option>
+                            <option value="5ml">Decant 5ml</option>
                         </select>
                     </div>
 
-                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                    <button class="btn-add-cart">Añadir al Carrito</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <div class="card-img-container">
-                    <img src="ruta/asad-bourbon.jpg" alt="Asad Zanzibar">
-                </div>
-                <div class="card-body">
-                    <h4 class="product-title">Asad Zanzibar (Marrón)</h4>
-                    <p class="product-desc">Vainilla Bourbon, especias y madera.</p>
-                    <div class="product-price">$42.00</div>
-
-                    <div class="options-wrapper">
-                        <label>Selecciona presentación:</label>
-                        <select class="decant-select">
+                <img src="asad-bourbon.jpg" alt="Asad Bourbon Marrón" class="product-image">
+                <div class="product-info">
+                    <h3>Asad Zanzibar (Marrón)</h3>
+                    <p class="price">$42.00</p>
+                    
+                    <div class="variant-selector">
+                        <label>Elige tamaño:</label>
+                        <select class="decant-options">
                             <option value="100ml">Botella 100ml</option>
-                            <option value="10ml">Decant 10ml - $11.00</option>
-                            <option value="5ml">Decant 5ml - $6.50</option>
+                            <option value="10ml">Decant 10ml</option>
+                            <option value="5ml">Decant 5ml</option>
                         </select>
                     </div>
 
-                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                    <button class="btn-add-cart">Añadir al Carrito</button>
                 </div>
             </div>
+
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2024 <span>Aromaverse</span>. Todos los derechos reservados.</p>
-        <p style="margin-top:10px; font-size: 0.8rem;">Envíos a todo el país | Calidad Garantizada</p>
+        <p>&copy; 2024 Aromaverse. Todos los derechos reservados.</p>
     </footer>
 
-    <script>
-        let itemsEnCarrito = 0;
-        const contador = document.getElementById('cart-counter');
-
-        function agregarAlCarrito() {
-            itemsEnCarrito++;
-            contador.innerText = itemsEnCarrito;
-            // Animación visual pequeña
-            contador.style.transform = "scale(1.5)";
-            setTimeout(() => contador.style.transform = "scale(1)", 200);
-            
-            alert("¡Producto añadido al carrito correctamente!");
-        }
-    </script>
 </body>
 </html>
