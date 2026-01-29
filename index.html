@@ -198,3 +198,272 @@
             object-fit: cover;
             transition: transform 0.5s;
         }
+        
+        .product-card:hover .card-img-container img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #111;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: #d4af37; /* Dorado */
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* SELECTOR DE DECANTS */
+        .options-wrapper {
+            margin-bottom: 15px;
+            background: #fafafa;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .options-wrapper label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .decant-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* BOTÓN DE COMPRA */
+        .btn-add {
+            margin-top: auto;
+            background-color: #d4af37; /* DORADO */
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .btn-add:hover {
+            background-color: #b5952f; /* Dorado oscuro */
+        }
+
+        /* =========================================
+           5. FOOTER
+           ========================================= */
+        footer {
+            background-color: #111;
+            color: #888;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer p span {
+            color: #d4af37;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Aromaverse</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="cart-widget">
+            🛒 <span class="cart-count" id="cart-counter">0</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>La Esencia del Lujo</h2>
+        <p>Descubre las mejores fragancias árabes y de diseñador. Disponible en botella completa y decants.</p>
+        <a href="#catalogo" class="btn-hero">Ver Colección</a>
+    </section>
+
+    <div class="catalog-section" id="catalogo">
+        
+        <div class="section-header">
+            <h3>Colección Yara</h3>
+            <hr>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="card-img-container">
+                    <img src="ruta/yara-rosa.jpg" alt="Yara Rosa">
+                </div>
+                <div class="card-body">
+                    <h4 class="product-title">Lattafa Yara (Rosa)</h4>
+                    <p class="product-desc">Notas dulces, vainilla y orquídea.</p>
+                    <div class="product-price">$45.00</div>
+                    
+                    <div class="options-wrapper">
+                        <label>Selecciona presentación:</label>
+                        <select class="decant-select">
+                            <option value="100ml">Botella 100ml</option>
+                            <option value="10ml">Decant 10ml - $12.00</option>
+                            <option value="5ml">Decant 5ml - $7.00</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <img src="ruta/yara-moi.jpg" alt="Yara Moi">
+                </div>
+                <div class="card-body">
+                    <h4 class="product-title">Yara Moi (Blanco)</h4>
+                    <p class="product-desc">Notas de jazmín, melocotón y caramelo.</p>
+                    <div class="product-price">$45.00</div>
+
+                    <div class="options-wrapper">
+                        <label>Selecciona presentación:</label>
+                        <select class="decant-select">
+                            <option value="100ml">Botella 100ml</option>
+                            <option value="10ml">Decant 10ml - $12.00</option>
+                            <option value="5ml">Decant 5ml - $7.00</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <img src="ruta/yara-tous.jpg" alt="Yara Tous">
+                </div>
+                <div class="card-body">
+                    <h4 class="product-title">Yara Tous (Naranja)</h4>
+                    <p class="product-desc">Mango, coco y fruta de la pasión.</p>
+                    <div class="product-price">$48.00</div>
+
+                    <div class="options-wrapper">
+                        <label>Selecciona presentación:</label>
+                        <select class="decant-select">
+                            <option value="100ml">Botella 100ml</option>
+                            <option value="10ml">Decant 10ml - $13.00</option>
+                            <option value="5ml">Decant 5ml - $7.50</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section-header">
+            <h3>Colección Asad</h3>
+            <hr>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="card-img-container">
+                    <img src="ruta/asad-black.jpg" alt="Asad Black">
+                </div>
+                <div class="card-body">
+                    <h4 class="product-title">Lattafa Asad (Negro)</h4>
+                    <p class="product-desc">Pimienta negra, piña y tabaco.</p>
+                    <div class="product-price">$40.00</div>
+
+                    <div class="options-wrapper">
+                        <label>Selecciona presentación:</label>
+                        <select class="decant-select">
+                            <option value="100ml">Botella 100ml</option>
+                            <option value="10ml">Decant 10ml - $10.00</option>
+                            <option value="5ml">Decant 5ml - $6.00</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <img src="ruta/asad-bourbon.jpg" alt="Asad Zanzibar">
+                </div>
+                <div class="card-body">
+                    <h4 class="product-title">Asad Zanzibar (Marrón)</h4>
+                    <p class="product-desc">Vainilla Bourbon, especias y madera.</p>
+                    <div class="product-price">$42.00</div>
+
+                    <div class="options-wrapper">
+                        <label>Selecciona presentación:</label>
+                        <select class="decant-select">
+                            <option value="100ml">Botella 100ml</option>
+                            <option value="10ml">Decant 10ml - $11.00</option>
+                            <option value="5ml">Decant 5ml - $6.50</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-add" onclick="agregarAlCarrito()">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 <span>Aromaverse</span>. Todos los derechos reservados.</p>
+        <p style="margin-top:10px; font-size: 0.8rem;">Envíos a todo el país | Calidad Garantizada</p>
+    </footer>
+
+    <script>
+        let itemsEnCarrito = 0;
+        const contador = document.getElementById('cart-counter');
+
+        function agregarAlCarrito() {
+            itemsEnCarrito++;
+            contador.innerText = itemsEnCarrito;
+            // Animación visual pequeña
+            contador.style.transform = "scale(1.5)";
+            setTimeout(() => contador.style.transform = "scale(1)", 200);
+            
+            alert("¡Producto añadido al carrito correctamente!");
+        }
+    </script>
+</body>
+</html>
