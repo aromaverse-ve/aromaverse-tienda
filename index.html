@@ -106,7 +106,149 @@
             letter-spacing: 1px;
             margin-right: 5px;
         }
+  /* =========================================
+   NUEVO ESTILO: CATÁLOGO LATTAFA (MODAL)
+   ========================================= */
 
+/* El fondo oscuro que cubre la pantalla */
+.modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 9999; /* Siempre encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8); /* Fondo negro transparente */
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Efecto borroso de fondo */
+}
+
+/* La caja blanca del catálogo */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px; /* Ancho máximo en PC */
+    max-height: 90vh; /* Altura máxima */
+    overflow-y: auto; /* Scroll si es muy alto */
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+/* Botón de cerrar (X) */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Títulos */
+.modal-content h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+    display: block;
+}
+
+/* GRID RESPONSIVO (La magia para el celular) */
+.grid-coleccion {
+    display: grid;
+    /* Se acomoda solo: 1 o 2 en celular, 4 en PC */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    gap: 15px;
+}
+
+/* Tarjetitas individuales */
+.mini-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 15px;
+    background: #fafafa;
+    transition: transform 0.2s;
+}
+
+.mini-card:hover {
+    transform: translateY(-3px); /* Pequeño salto al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Círculos de colores */
+.color-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    border: 2px solid rgba(0,0,0,0.1);
+}
+/* Colores específicos */
+.rosa { background: #ffcce0; }
+.blanco { background: #ffffff; border: 1px solid #ddd; }
+.naranja { background: #ffcc99; }
+.rojo { background: #ff6b6b; }
+.negro { background: #222; }
+.azul { background: #6b93d6; }
+.marron { background: #8d6e63; }
+
+/* Textos pequeños */
+.mini-card h3 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #222;
+}
+
+.genero {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #888;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.notas {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Botones */
+.btn-explorar {
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.btn-mini-add {
+    background-color: #222;
+    color: white;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-mini-add:hover {
+    background-color: #000;
+}
     </style>
 </head>
 <body>
@@ -235,6 +377,9 @@
                 reviews: 530,
                 description: "La colección completa de 7 íconos. Desde la dulzura de Yara hasta la potencia de Asad. Al finalizar, indícanos el color que deseas. ¿Indeciso? ¡Pídelo y recibe asesoría olfativa gratuita para elegir tu ideal!",
                 price: 35.00,
+                <button class="btn-explorar" onclick="abrirColeccion()">
+    ✨ Explorar los 7 Aromas
+</button>
                 image: "yara.jpg",
                 decants: [ { ml: 5, price: 6.00 }, { ml: 10, price: 10.00 }, { ml: 15, price: 14.00 } ]
             },
@@ -656,5 +801,90 @@
             if(el) el.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
+    <div id="modalLattafa" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="cerrarColeccion()">&times;</span>
+        <h2>Colección Lattafa (Yara & Asad)</h2>
+        <p class="modal-subtitle">Selecciona tu variante favorita</p>
+        
+        <div class="grid-coleccion">
+            <div class="mini-card mujer">
+                <div class="color-dot rosa"></div>
+                <h3>Yara (Rosa)</h3>
+                <span class="genero">Mujer</span>
+                <p class="notas">Orquídea, Heliotropo y Frutas Tropicales.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card mujer">
+                <div class="color-dot blanco"></div>
+                <h3>Yara Moi (Blanco)</h3>
+                <span class="genero">Mujer</span>
+                <p class="notas">Jazmín, Durazno y Caramelo dulce.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card mujer">
+                <div class="color-dot naranja"></div>
+                <h3>Yara Tous (Naranja)</h3>
+                <span class="genero">Mujer</span>
+                <p class="notas">Mango, Coco y Maracuyá tropical.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card mujer">
+                <div class="color-dot rojo"></div>
+                <h3>Yara Candy (Rojo)</h3>
+                <span class="genero">Mujer</span>
+                <p class="notas">Fresa, Vainilla y Golosinas dulces.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card hombre">
+                <div class="color-dot negro"></div>
+                <h3>Asad (Negro)</h3>
+                <span class="genero">Hombre</span>
+                <p class="notas">Pimienta negra, Tabaco y Café.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card hombre">
+                <div class="color-dot azul"></div>
+                <h3>Asad Zanzibar</h3>
+                <span class="genero">Hombre</span>
+                <p class="notas">Lavanda, Iris y Vainilla salada.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+
+            <div class="mini-card hombre">
+                <div class="color-dot marron"></div>
+                <h3>Asad Bourbon</h3>
+                <span class="genero">Hombre</span>
+                <p class="notas">Maderas, Especias y toque licoroso.</p>
+                <button class="btn-mini-add">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Lógica simple para abrir y cerrar
+    function abrirColeccion() {
+        document.getElementById("modalLattafa").style.display = "flex";
+        document.body.style.overflow = "hidden"; // Evita scroll atrás
+    }
+
+    function cerrarColeccion() {
+        document.getElementById("modalLattafa").style.display = "none";
+        document.body.style.overflow = "auto"; // Reactiva scroll
+    }
+
+    // Cerrar si hacen click afuera de la tarjeta
+    window.onclick = function(event) {
+        var modal = document.getElementById("modalLattafa");
+        if (event.target == modal) {
+            cerrarColeccion();
+        }
+    }
+</script>
 </body>
 </html>
