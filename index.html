@@ -3,354 +3,821 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AromaVerse</title>
+    <title>AromaVerse - Tienda Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
     <style>
-        /* --- ESTILOS BASE --- */
-        :root { --gold: #dab469; --dark: #333; --light: #f9f9f9; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; color: var(--dark); background: #fff; }
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
-        a { text-decoration: none; color: inherit; }
-        button { cursor: pointer; font-family: 'Lato', sans-serif; }
-
-        /* --- NAVBAR --- */
-        .navbar { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: fixed; width: 100%; top: 0; z-index: 1000; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
-        .nav-brand h1 { font-size: 24px; color: var(--gold); font-weight: 700; letter-spacing: 2px; }
-        .nav-links { display: flex; gap: 20px; list-style: none; }
-        .cart-icon { position: relative; font-size: 1.2rem; cursor: pointer; }
-        #cart-count { position: absolute; top: -8px; right: -10px; background: var(--gold); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; }
-
-        /* --- HERO --- */
-        .hero { height: 60vh; background: #333; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 70px; }
-        .hero h2 { font-size: 3rem; margin-bottom: 20px; }
-        .btn-primary { background: var(--gold); color: white; padding: 12px 30px; border: none; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-
-        /* --- TIENDA Y GRID --- */
-        .shop { padding: 60px 5%; max-width: 1400px; margin: 0 auto; }
-        .shop h2 { text-align: center; margin-bottom: 40px; }
-
-        .filters { text-align: center; margin-bottom: 30px; }
-        .filter-btn { padding: 8px 20px; margin: 5px; border: 1px solid #ddd; background: transparent; border-radius: 20px; transition: 0.3s; }
-        .filter-btn:hover, .filter-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
-
-        .products-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 30px; 
+        /* --- ESTILOS ORIGINALES (NO TOCAR) --- */
+        :root {
+            --gold: #dab469;
+            --dark: #333;
         }
 
-        .product-card { 
-            border: 1px solid #eee; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            transition: transform 0.3s; 
+        /* --- ESTILOS GENERALES Y IMÁGENES --- */
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        /* --- ESTILOS DEL BUSCADOR --- */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            position: relative;
+            padding: 0 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            padding-left: 45px;
+            font-size: 16px;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .search-input:focus {
+            border-color: var(--gold);
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(218, 180, 105, 0.2);
+        }
+        .search-icon {
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 18px;
+        }
+
+        /* --- NUEVOS ESTILOS DE FILTROS (DOBLE FILA) --- */
+        .filters-container {
+            margin-bottom: 40px;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .filter-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--gold);
+            color: white;
+            border-color: var(--gold);
+            box-shadow: 0 4px 10px rgba(218, 180, 105, 0.3);
+        }
+
+        .filter-label-inline {
+            font-size: 12px;
+            color: #aaa;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 5px;
+        }
+
+        /* --- ESTILOS AGREGADOS PARA LA FUNCIONALIDAD DE COLECCIÓN --- */
+        /* Botón de ver colección en la tarjeta */
+        .btn-view-collection {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-view-collection:hover {
+            background-color: var(--gold);
+            color: #fff;
+        }
+
+        /* Estilos del Modal (Pop-up) */
+        .modal-overlay {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8); /* Fondo oscuro */
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 8px;
+            position: relative;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-modal:hover { color: #000; }
+
+        .modal-header h2 {
+            margin-top: 0;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Grid dentro del modal */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .mini-card {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
             background: #fff;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-
-        .product-image { height: 250px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .product-image img { width: 100%; height: 100%; object-fit: contain; }
-
-        .product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .product-cat { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; font-weight: bold; }
-        .product-name { font-size: 1.2rem; margin: 5px 0; font-weight: 700; }
-        .product-price { font-size: 1.3rem; font-weight: bold; margin: 10px 0; color: var(--dark); }
+        .mini-card:hover { border-color: var(--gold); transform: translateY(-3px); }
         
-        /* Opciones de Decant */
-        .decant-options { margin-bottom: 15px; background: #fafafa; padding: 10px; border-radius: 5px; }
-        .decant-row { display: flex; align-items: center; margin-bottom: 5px; cursor: pointer; font-size: 0.9rem; }
-        .decant-row input { margin-right: 8px; accent-color: var(--gold); }
+        .mini-card h4 { margin: 10px 0 5px 0; font-size: 16px; color: #333; }
+        .mini-card .gender { font-size: 12px; color: #777; margin-bottom: 5px; display: block; }
+        .mini-card .notes { font-size: 11px; color: #555; font-style: italic; margin-bottom: 10px; height: 32px; overflow: hidden; }
+        .mini-card .price { font-weight: bold; color: var(--gold); font-size: 16px; margin-bottom: 10px; }
         
-        .btn-add { width: 100%; padding: 12px; background: var(--dark); color: white; border: none; font-weight: bold; text-transform: uppercase; margin-top: auto; }
-        .btn-add:hover { background: var(--gold); }
-
-        /* --- MODAL LATTAFA --- */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
-        .modal-content { background: #fff; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: 8px; position: relative; }
-        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #aaa; }
-        .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
-        .mini-card { border: 1px solid #eee; padding: 15px; border-radius: 6px; text-align: center; }
-        .mini-card h4 { margin: 10px 0; }
-        .mini-btn { background: #333; color: white; padding: 8px; width: 100%; border: none; border-radius: 4px; margin-top: 10px; }
-
-        /* --- CART SIDEBAR --- */
-        .cart-panel { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 3000; display: flex; flex-direction: column; }
-        .cart-panel.active { right: 0; }
-        .cart-header { padding: 20px; background: var(--dark); color: white; display: flex; justify-content: space-between; }
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 20px; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; }
-        .cart-total { font-size: 1.4rem; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 15px; }
-
-        @media (max-width: 768px) {
-            .cart-panel { width: 100%; }
+        .btn-mini-add {
+            background-color: var(--dark);
+            color: #fff;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
         }
+        .btn-mini-add:hover { background-color: var(--gold); }
+
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="nav-brand"><h1>AROMAVERSE</h1></div>
-        <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+        <div class="container">
+            <div class="nav-brand">
+                <h1>AROMAVERSE</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" onclick="scrollToSection('inicio')">Inicio</a></li>
+                <li><a href="#products-grid" onclick="scrollToSection('products-grid')">Tienda</a></li>
+                <li><a href="#sobre" onclick="scrollToSection('sobre')">Sobre Nosotros</a></li>
+                <li><a href="#contacto" onclick="scrollToSection('contacto')">Contacto</a></li>
+                <li class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></li>
+            </ul>
+        </div>
     </nav>
 
-    <header class="hero">
-        <h2>Encuentra tu esencia</h2>
-        <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView()">Ver Catálogo</button>
+    <header id="inicio" class="hero">
+        <div class="hero-content">
+            <h2>Descubre tu esencia</h2>
+            <p>Una colección curada de fragancias premium para momentos inolvidables.</p>
+            <button class="btn btn-primary" onclick="scrollToSection('products-grid')">Ver Catálogo</button>
+        </div>
     </header>
 
-    <section id="shop" class="shop">
-        <h2>Catálogo Exclusivo</h2>
+    <section class="shop container">
+        <h2>Nuestros Perfumes</h2>
         
-        <div class="filters">
-            <button class="filter-btn active" onclick="filterProducts('all')">Todos</button>
-            <button class="filter-btn" onclick="filterProducts('Hombre')">Hombre</button>
-            <button class="filter-btn" onclick="filterProducts('Mujer')">Mujer</button>
-            <button class="filter-btn" onclick="filterProducts('Unisex')">Unisex</button>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Buscar perfume (ej. Yara, Oud, Creed)..." oninput="searchProducts(this.value)">
         </div>
 
-        <div id="products-grid" class="products-grid">
+        <div class="filters-container">
+            <div class="filter-row">
+                <button class="filter-btn active" onclick="filterProducts('all')" style="font-weight: bold;">Todos</button>
+                
+                <button class="filter-btn" onclick="filterProducts('trending')">Trending 🔥</button>
+                <button class="filter-btn" onclick="filterProducts('arabic')">Árabes 🕌</button>
+                <button class="filter-btn" onclick="filterProducts('niche')">Nicho 💎</button>
             </div>
+
+            <div class="filter-row">
+                <span class="filter-label-inline">Género:</span>
+                <button class="filter-btn" onclick="filterProducts('Hombre')">Hombre 👨</button>
+                <button class="filter-btn" onclick="filterProducts('Mujer')">Mujer 👩</button>
+                <button class="filter-btn" onclick="filterProducts('Unisex')">Unisex 👥</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+            <p style="text-align:center; width:100%; grid-column: 1/-1;">Cargando catálogo...</p>
+        </div>
     </section>
 
-    <div id="lattafaModal" class="modal">
+    <div id="lattafaModal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal" onclick="closeLattafaCollection()">&times;</span>
-            <h2 style="text-align:center;">Colección Viral Lattafa</h2>
-            <div id="lattafa-grid" class="modal-grid"></div>
+            <div class="modal-header">
+                <h2>Colección Viral Completa</h2>
+                <p>Explora cada fragancia individualmente</p>
+            </div>
+            <div id="lattafa-grid" class="collection-grid">
+                </div>
         </div>
     </div>
+
+    <section id="sobre" class="about">
+        <div class="container">
+            <h2>Por qué elegirnos</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>💎 Calidad Premium</h3>
+                    <p>Solo trabajamos con casas perfumeras originales.</p>
+                </div>
+                <div class="feature">
+                    <h3>🚚 Envío Seguro</h3>
+                    <p>Empaquetado especial para proteger el cristal.</p>
+                </div>
+                <div class="feature">
+                    <h3>✨ Decants Originales</h3>
+                    <p>Prueba perfumes de lujo en formatos accesibles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Ubicación</h3>
+                    <p>Caracas, Venezuela</p>
+                </div>
+                <div class="contact-item">
+                    <h3>Instagram</h3>
+                    <p>@aromaverse.ve</p>
+                </div>
+                <div class="contact-item">
+                    <h3>WhatsApp</h3>
+                    <p>+58 424-2201111</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div id="cart-panel" class="cart-panel">
-        <div class="cart-header">
-            <h3>Tu Carrito</h3>
-            <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleCart()">&times;</span>
-        </div>
-        <div id="cart-items" class="cart-items"></div>
-        <div class="cart-footer">
-            <div class="cart-total"><span>Total:</span> <span id="cart-total">$0.00</span></div>
-            <button class="btn-add" style="background:#25D366;" onclick="checkout()">Pedir por WhatsApp</button>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Tu Carrito</h3>
+                <button onclick="toggleCart()" class="close-btn">✕</button>
+            </div>
+            <div id="cart-items" class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: <span id="cart-total">$0.00</span></div>
+                <button class="btn btn-primary" onclick="checkout()">Finalizar Compra por WhatsApp</button>
+                <button class="btn btn-secondary" onclick="toggleCart()">Seguir viendo</button>
+            </div>
         </div>
     </div>
 
+    <footer class="footer">
+        <p>&copy; 2026 AromaVerse. Todos los derechos reservados.</p>
+    </footer>
+
     <script>
-        /* --- DATOS --- */
+        /* --- BASE DE DATOS DE PRODUCTOS --- */
         const products = [
             {
                 id: 1,
-                name: "Colección Viral Lattafa", // ID 1 ABRE MODAL
+                name: "Colección Viral Lattafa (Yara & Asad)",
                 category: "trending",
                 gender: "Unisex",
+                rating: 4.9,
+                reviews: 530,
+                description: "La colección completa de 7 íconos. Desde la dulzura de Yara hasta la potencia de Asad.",
                 price: 35.00,
-                image: "yara.jpg", 
-                decants: [] 
+                image: "yara.jpg",
+                decants: [ { ml: 5, price: 6.00 }, { ml: 10, price: 10.00 }, { ml: 15, price: 14.00 } ]
             },
-            { id: 2, name: "Rasasi Hawas Black", category: "arabic", gender: "Hombre", price: 45.00, image: "hawas.jpg", decants: [{ml:5, price:8}, {ml:10, price:14}] },
-            { id: 3, name: "Ajmal Wisal Dhahab", category: "arabic", gender: "Mujer", price: 52.00, image: "wisal.jpg", decants: [{ml:5, price:9}, {ml:10, price:16}] },
-            { id: 4, name: "Lattafa Nebras", category: "arabic", gender: "Mujer", price: 40.00, image: "nebras.jpg", decants: [{ml:5, price:7}, {ml:10, price:12}] },
-            { id: 5, name: "Al Haramain Amber Oud Gold", category: "arabic", gender: "Unisex", price: 48.00, image: "amber.jpg", decants: [{ml:5, price:8.5}, {ml:10, price:15}] },
-            { id: 6, name: "Rasasi Dahn Al Oudh", category: "arabic", gender: "Hombre", price: 55.00, image: "dahn.jpg", decants: [{ml:5, price:9.5}, {ml:10, price:17}] },
-            { id: 7, name: "Lattafa Khamrah", category: "arabic", gender: "Unisex", price: 38.00, image: "khamrah.jpg", decants: [{ml:5, price:7}, {ml:10, price:12}] },
-            { id: 9, name: "Creed Original Vetiver", category: "niche", gender: "Hombre", price: 95.00, image: "vetiver.jpg", decants: [{ml:5, price:16}, {ml:10, price:29}] },
-            { id: 10, name: "Maison Margiela Jazz Club", category: "niche", gender: "Hombre", price: 85.00, image: "jazz.jpg", decants: [{ml:5, price:14}, {ml:10, price:26}] },
-            { id: 12, name: "Parfums de Marly Layton", category: "niche", gender: "Hombre", price: 88.00, image: "layton.jpg", decants: [{ml:5, price:15}, {ml:10, price:28}] },
-            { id: 13, name: "Tom Ford Tobacco Vanille", category: "niche", gender: "Unisex", price: 92.00, image: "tobacco.jpg", decants: [{ml:5, price:16}, {ml:10, price:29}] }
+            {
+                id: 2,
+                name: "Rasasi Hawas Black",
+                category: "arabic",
+                gender: "Hombre",
+                rating: 4.9,
+                reviews: 150,
+                description: "Frescura acuática intensa con un fondo oscuro y seductor.",
+                price: 45.00,
+                image: "hawas.jpg",
+                decants: [ { ml: 5, price: 8.00 }, { ml: 10, price: 14.00 }, { ml: 15, price: 19.00 } ]
+            },
+            {
+                id: 3,
+                name: "Ajmal Wisal Dhahab",
+                category: "arabic",
+                gender: "Mujer",
+                rating: 4.7,
+                reviews: 85,
+                description: "Elegancia dorada con una mezcla brillante de pera fresca y rosa.",
+                price: 52.00,
+                image: "wisal.jpg",
+                decants: [ { ml: 5, price: 9.00 }, { ml: 10, price: 16.00 }, { ml: 15, price: 22.00 } ]
+            },
+            {
+                id: 4,
+                name: "Lattafa Nebras",
+                category: "arabic",
+                gender: "Mujer",
+                rating: 4.8,
+                reviews: 190,
+                description: "Aroma gourmand adictivo con cacao rico, vainilla y bayas.",
+                price: 40.00,
+                image: "nebras.jpg",
+                decants: [ { ml: 5, price: 7.00 }, { ml: 10, price: 12.00 }, { ml: 15, price: 17.00 } ]
+            },
+            {
+                id: 5,
+                name: "Al Haramain Amber Oud Gold Edition",
+                category: "arabic",
+                gender: "Unisex",
+                rating: 4.9,
+                reviews: 320,
+                description: "Opulencia amaderada equilibrada con un corazón dulce de ámbar.",
+                price: 48.00,
+                image: "amber.jpg",
+                decants: [ { ml: 5, price: 8.50 }, { ml: 10, price: 15.00 }, { ml: 15, price: 21.00 } ]
+            },
+            {
+                id: 6,
+                name: "Rasasi Dahn Al Oudh Al Nokhba",
+                category: "arabic",
+                gender: "Hombre",
+                rating: 4.6,
+                reviews: 45,
+                description: "La esencia pura y tradicional del Oud. Maderas profundas.",
+                price: 55.00,
+                image: "dahn.jpg",
+                decants: [ { ml: 5, price: 9.50 }, { ml: 10, price: 17.00 }, { ml: 15, price: 24.00 } ]
+            },
+            {
+                id: 7,
+                name: "Lattafa Khamrah",
+                category: "arabic",
+                gender: "Unisex",
+                rating: 4.9,
+                reviews: 400,
+                description: "Canela y dátiles envuelta en un almizcle blanco cremoso.",
+                price: 38.00,
+                image: "khamrah.jpg",
+                decants: [ { ml: 5, price: 7.00 }, { ml: 10, price: 12.00 }, { ml: 15, price: 17.00 } ]
+            },
+            {
+                id: 8,
+                name: "Ajmal Mukhallat Al Shams",
+                category: "arabic",
+                gender: "Mujer",
+                rating: 4.5,
+                reviews: 60,
+                description: "Mezcla oriental luminosa de azafrán, ámbar y notas florales.",
+                price: 42.00,
+                image: "noor.jpg",
+                decants: [ { ml: 5, price: 7.50 }, { ml: 10, price: 13.00 }, { ml: 15, price: 18.00 } ]
+            },
+            {
+                id: 9,
+                name: "Creed Original Vetiver",
+                category: "niche",
+                gender: "Hombre",
+                rating: 4.8,
+                reviews: 110,
+                description: "Limpio, verde y jabonoso. Interpretación fresca del vetiver.",
+                price: 95.00,
+                image: "vetiver.jpg",
+                decants: [ { ml: 5, price: 16.00 }, { ml: 10, price: 29.00 }, { ml: 15, price: 42.00 } ]
+            },
+            {
+                id: 10,
+                name: "Maison Margiela Replica Jazz Club",
+                category: "niche",
+                gender: "Hombre",
+                rating: 4.7,
+                reviews: 280,
+                description: "Ambiente de club privado con ron, tabaco y vainilla cálida.",
+                price: 85.00,
+                image: "jazz.jpg",
+                decants: [ { ml: 5, price: 14.00 }, { ml: 10, price: 26.00 }, { ml: 15, price: 38.00 } ]
+            },
+            {
+                id: 11,
+                name: "Heeley Sel Marin",
+                category: "niche",
+                gender: "Unisex",
+                rating: 4.6,
+                reviews: 95,
+                description: "Brisa marina auténtica. Sal, limón y algas.",
+                price: 78.00,
+                image: "selmarin.jpg",
+                decants: [ { ml: 5, price: 13.00 }, { ml: 10, price: 24.00 }, { ml: 15, price: 35.00 } ]
+            },
+            {
+                id: 12,
+                name: "Parfums de Marly Layton",
+                category: "niche",
+                gender: "Hombre",
+                rating: 4.9,
+                reviews: 500,
+                description: "Cardamomo, manzana y vainilla. Seductor y versátil.",
+                price: 88.00,
+                image: "layton.jpg",
+                decants: [ { ml: 5, price: 15.00 }, { ml: 10, price: 28.00 }, { ml: 15, price: 40.00 } ]
+            },
+            {
+                id: 13,
+                name: "Tom Ford Tobacco Vanille",
+                category: "niche",
+                gender: "Unisex",
+                rating: 4.8,
+                reviews: 600,
+                description: "Hojas de tabaco ricas, vainilla cremosa y frutos secos.",
+                price: 92.00,
+                image: "tobacco.jpg",
+                decants: [ { ml: 5, price: 16.00 }, { ml: 10, price: 29.00 }, { ml: 15, price: 42.00 } ]
+            },
+            {
+                id: 14,
+                name: "Amouage Dia Man",
+                category: "niche",
+                gender: "Hombre",
+                rating: 4.7,
+                reviews: 70,
+                description: "Sofisticación pura. Incienso de Omán, peonía y vetiver seco.",
+                price: 98.00,
+                image: "dia.jpg",
+                decants: [ { ml: 5, price: 17.00 }, { ml: 10, price: 30.00 }, { ml: 15, price: 44.00 } ]
+            }
         ];
 
+        /* --- SUB-PRODUCTOS (PARA EL MODAL DE LATTAFA) --- */
         const lattafaCollection = [
-            { id: "1-A", name: "Yara (Rosa)", gender: "Mujer", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] },
-            { id: "1-B", name: "Yara Moi (Blanco)", gender: "Mujer", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] },
-            { id: "1-C", name: "Yara Tous (Naranja)", gender: "Mujer", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] },
-            { id: "1-D", name: "Yara Candy (Rojo)", gender: "Mujer", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] },
-            { id: "1-E", name: "Asad (Negro)", gender: "Hombre", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] },
-            { id: "1-F", name: "Asad Zanzibar", gender: "Hombre", price: 35.00, decants: [{ml:5, price:6}, {ml:10, price:10}] }
+            { id: "1-A", name: "Yara (Rosa)", gender: "Mujer", price: 35.00, notes: "Orquídea, Heliotropo, Frutas Tropicales", icon: "🌸" },
+            { id: "1-B", name: "Yara Moi (Blanco)", gender: "Mujer", price: 35.00, notes: "Jazmín, Melocotón, Caramelo", icon: "🤍" },
+            { id: "1-C", name: "Yara Tous (Naranja)", gender: "Mujer", price: 35.00, notes: "Mango, Maracuyá, Coco", icon: "🥭" },
+            { id: "1-D", name: "Yara Candy (Rojo)", gender: "Mujer", price: 35.00, notes: "Grosella Negra, Vainilla, Cítricos", icon: "🍬" },
+            { id: "1-E", name: "Asad (Negro)", gender: "Hombre", price: 35.00, notes: "Pimienta Negra, Tabaco, Café", icon: "🖤" },
+            { id: "1-F", name: "Asad Zanzibar (Azul)", gender: "Hombre", price: 35.00, notes: "Lavanda, Leche de Coco, Iris", icon: "🌊" },
+            { id: "1-G", name: "Asad Bourbon (Marrón)", gender: "Hombre", price: 35.00, notes: "Vainilla Bourbon, Especias Cálidas", icon: "🥃" }
         ];
 
+        /* --- LÓGICA DE LA TIENDA --- */
         let cart = JSON.parse(localStorage.getItem('aromaverse_cart')) || [];
-
-        /* --- INICIALIZAR --- */
-        renderProducts(products);
+        
+        // Inicializar
+        renderProducts(products); 
         updateCartCount();
 
-        /* --- RENDERIZADO PRINCIPAL --- */
-        function renderProducts(list) {
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = '';
-            
-            list.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                
-                // Generar HTML de opciones (si no es Lattafa ID 1)
-                let optionsHTML = '';
-                let btnHTML = '';
-
-                if(p.id === 1) {
-                    // Botón para abrir modal
-                    btnHTML = `<button class="btn-add" onclick="openLattafaCollection()">EXPLORAR COLECCIÓN</button>`;
-                } else {
-                    // Opciones normales
-                    optionsHTML = `<div class="decant-options">`;
-                    optionsHTML += `
-                        <label class="decant-row">
-                            <input type="radio" name="decant-${p.id}" value="Botella" data-price="${p.price}" checked onchange="updatePrice(${p.id})">
-                            Botella ($${p.price.toFixed(2)})
-                        </label>`;
-                    p.decants.forEach(d => {
-                        optionsHTML += `
-                            <label class="decant-row">
-                                <input type="radio" name="decant-${p.id}" value="${d.ml}" data-price="${d.price}" onchange="updatePrice(${p.id})">
-                                ${d.ml}ml ($${d.price.toFixed(2)})
-                            </label>`;
-                    });
-                    optionsHTML += `</div>`;
-                    btnHTML = `<button class="btn-add" onclick="addToCart(${p.id})">Añadir al Carrito</button>`;
-                }
-
-                card.innerHTML = `
-                    <div class="product-image">
-                        <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">
-                    </div>
-                    <div class="product-info">
-                        <span class="product-cat">${p.gender}</span>
-                        <h3 class="product-name">${p.name}</h3>
-                        <div class="product-price" id="price-${p.id}">$${p.price.toFixed(2)}</div>
-                        ${optionsHTML}
-                        ${btnHTML}
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        /* --- PRECIOS DINÁMICOS --- */
-        function updatePrice(id) {
-            const radio = document.querySelector(`input[name="decant-${id}"]:checked`);
-            if(radio) {
-                document.getElementById(`price-${id}`).innerText = '$' + parseFloat(radio.dataset.price).toFixed(2);
-            }
-        }
-
-        /* --- MODAL LATTAFA --- */
+        /* --- FUNCIONES DEL MODAL DE COLECCIÓN --- */
         function openLattafaCollection() {
             const grid = document.getElementById('lattafa-grid');
-            grid.innerHTML = '';
-            
-            lattafaCollection.forEach(item => {
-                let opts = `<div class="decant-options" style="text-align:left;">`;
-                opts += `<label class="decant-row"><input type="radio" name="modal-${item.id}" value="Botella" data-price="${item.price}" checked onchange="updateModalPrice('${item.id}')"> Botella ($${item.price})</label>`;
-                item.decants.forEach(d => {
-                    opts += `<label class="decant-row"><input type="radio" name="modal-${item.id}" value="${d.ml}" data-price="${d.price}" onchange="updateModalPrice('${item.id}')"> ${d.ml}ml ($${d.price})</label>`;
-                });
-                opts += `</div>`;
+            grid.innerHTML = ''; // Limpiar previo
 
+            lattafaCollection.forEach(item => {
                 grid.innerHTML += `
                     <div class="mini-card">
+                        <div style="font-size: 2rem;">${item.icon}</div>
                         <h4>${item.name}</h4>
-                        <div style="font-weight:bold; margin-bottom:5px;" id="modal-price-${item.id}">$${item.price.toFixed(2)}</div>
-                        ${opts}
-                        <button class="mini-btn" onclick="addModalItem('${item.id}', '${item.name}')">Añadir</button>
+                        <span class="gender">${item.gender}</span>
+                        <div class="notes">${item.notes}</div>
+                        <div class="price">$${item.price.toFixed(2)}</div>
+                        <button class="btn-mini-add" onclick="addSingleItemToCart('${item.name}', ${item.price})">Añadir al Carrito</button>
                     </div>
                 `;
             });
-            document.getElementById('lattafaModal').style.display = 'flex';
+
+            document.getElementById('lattafaModal').style.display = 'block';
         }
 
         function closeLattafaCollection() {
             document.getElementById('lattafaModal').style.display = 'none';
         }
 
-        function updateModalPrice(id) {
-            const radio = document.querySelector(`input[name="modal-${id}"]:checked`);
-            if(radio) document.getElementById(`modal-price-${id}`).innerText = '$' + parseFloat(radio.dataset.price).toFixed(2);
+        // Cerrar modal si se hace clic fuera del contenido
+        window.onclick = function(event) {
+            const modal = document.getElementById('lattafaModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
 
-        function addModalItem(id, name) {
-            const radio = document.querySelector(`input[name="modal-${id}"]:checked`);
-            if(!radio) return;
+        function addSingleItemToCart(name, price) {
+            // Añadir items sueltos del modal al carrito
+            const cartItemId = name.replace(/\s+/g, '-').toLowerCase(); // ID simple basado en nombre
             
-            let size = radio.value;
-            if(!isNaN(size)) size += "ml";
+            const existing = cart.find(item => item.id === cartItemId);
             
-            addToCartLogic(`${id}-${size}`, `${name} (${size})`, parseFloat(radio.dataset.price));
-            alert("¡Añadido! 🛒");
-        }
-
-        /* --- FILTROS --- */
-        function filterProducts(cat) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if(cat === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.gender === cat || p.category === cat));
-        }
-
-        /* --- LOGICA CARRITO (PARTE 2 UNIDA) --- */
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const radio = document.querySelector(`input[name="decant-${productId}"]:checked`);
-            if (!radio) return; 
-
-            let size = radio.value;
-            if(!isNaN(size)) size += "ml"; 
-            const price = parseFloat(radio.getAttribute('data-price'));
-            
-            addToCartLogic(`${productId}-${size}`, `${product.name} (${size})`, price);
-            
-            // Animación simple
-            const btn = event.target;
-            const old = btn.innerText;
-            btn.innerText = "¡Listo! ✓";
-            btn.style.background = "#27ae60";
-            setTimeout(() => { btn.innerText = old; btn.style.background = ""; }, 1000);
-        }
-
-        function addToCartLogic(id, name, price) {
-            const existing = cart.find(item => item.id === id);
             if (existing) {
                 existing.quantity += 1;
             } else {
-                cart.push({ id, name, price, quantity: 1 });
+                cart.push({
+                    id: cartItemId,
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
             }
+            
             localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
             updateCartCount();
-            if(document.getElementById('cart-panel').classList.contains('active')) updateCartDisplay();
+            
+            // Feedback visual simple
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "¡Listo!";
+            btn.style.backgroundColor = "#4CAF50";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "";
+            }, 1000);
+
+            const panel = document.getElementById('cart-panel');
+            if(panel && panel.classList.contains('active')) updateCartDisplay();
+        }
+
+
+        /* --- FUNCIÓN DEL BUSCADOR --- */
+        function searchProducts(query) {
+            const term = query.toLowerCase();
+            
+            // Si el buscador está vacío
+            if(term === '') {
+                renderProducts(products);
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.filter-btn:first-child').classList.add('active'); // Activa "Todos"
+                return;
+            }
+
+            // Filtrar por nombre
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term));
+            
+            // Quitar clase activa de los filtros
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            
+            renderProducts(filtered);
+        }
+
+        /* --- FUNCIÓN DE FILTRADO --- */
+        function filterProducts(criteria) {
+            const searchInput = document.querySelector('.search-input');
+            if(searchInput) searchInput.value = '';
+            
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if(event && event.target) event.target.classList.add('active');
+
+            let filtered = [];
+
+            if (criteria === 'all') {
+                filtered = products;
+            } 
+            else if (['Hombre', 'Mujer', 'Unisex'].includes(criteria)) {
+                filtered = products.filter(p => p.gender === criteria);
+            } 
+            else {
+                filtered = products.filter(p => p.category === criteria);
+            }
+
+            renderProducts(filtered);
+        }
+
+        function renderProducts(productsToShow) {
+            const grid = document.getElementById('products-grid');
+            if(!grid) return;
+            grid.innerHTML = ''; 
+            
+            if (productsToShow.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666; font-size: 1.1em;">No encontramos perfumes con ese filtro 🔍</p>';
+                return;
+            }
+
+            productsToShow.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                let genderIcon = '👥';
+                if (product.gender === 'Hombre') genderIcon = '👨';
+                else if (product.gender === 'Mujer') genderIcon = '👩';
+                
+                let catLabel = 'Nicho';
+                if(product.category === 'trending') catLabel = 'Trending 🔥';
+                else if(product.category === 'arabic') catLabel = 'Árabe 🕌';
+
+                let imageHTML = `<div class="product-image">🧴</div>`;
+                if(product.image && product.image !== "") {
+                    imageHTML = `<div class="product-image"><img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.parentNode.innerHTML='🧴';"></div>`;
+                }
+                
+                // Generar HTML de Decants
+                let optionsHTML = '<div class="decants-section"><label>Formato:</label><div class="decants-options">';
+                optionsHTML += `
+                    <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
+                        <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
+                        <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
+                    </label>
+                `;
+
+                product.decants.forEach((decant) => {
+                    optionsHTML += `
+                        <label class="decant-option">
+                            <input type="radio" name="decant-${product.id}" value="${decant.ml}" data-price="${decant.price}" onchange="updatePrice(${product.id})">
+                            <span class="decant-label">${decant.ml}ml - $${decant.price.toFixed(2)}</span>
+                        </label>
+                    `;
+                });
+                optionsHTML += '</div></div>';
+                
+                // Botón extra SOLO para la colección Lattafa (ID 1)
+                let extraButtonHTML = '';
+                if (product.id === 1) {
+                    extraButtonHTML = `<button class="btn-view-collection" onclick="openLattafaCollection()">Explorar Colección (7)</button>`;
+                }
+
+                card.innerHTML = `
+                    ${imageHTML}
+                    <div class="product-info">
+                        <div class="product-category">${catLabel}</div>
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-gender">${genderIcon} ${product.gender}</div>
+                        <div class="product-rating">⭐ ${product.rating} <span style="color:#aaa; font-size:0.8em">(${product.reviews})</span></div>
+                        <p class="product-description">${product.description}</p>
+                        
+                        <div class="product-prices">
+                            <div class="price-item">
+                                <span class="price-label">Precio Seleccionado:</span>
+                                <span class="price-value" id="price-${product.id}">$${product.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-stock">✓ Disponible</div>
+                        ${optionsHTML}
+                        <button class="btn-add-cart" onclick="addToCart(${product.id})">Añadir al Carrito</button>
+                        ${extraButtonHTML}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updatePrice(productId) {
+            const selectedRadio = document.querySelector(`input[name="decant-${productId}"]:checked`);
+            if(selectedRadio) {
+                const price = parseFloat(selectedRadio.getAttribute('data-price'));
+                const priceEl = document.getElementById(`price-${productId}`);
+                if(priceEl) priceEl.textContent = `$${price.toFixed(2)}`;
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const selectedRadio = document.querySelector(`input[name="decant-${productId}"]:checked`);
+            
+            if (!selectedRadio) return; 
+
+            let selectedSize = selectedRadio.value;
+            if(!isNaN(selectedSize)) selectedSize += "ml"; 
+
+            const selectedPrice = parseFloat(selectedRadio.getAttribute('data-price'));
+            const cartItemId = `${productId}-${selectedSize}`;
+            
+            const existing = cart.find(item => item.id === cartItemId);
+            
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: cartItemId,
+                    name: `${product.name} (${selectedSize})`,
+                    price: selectedPrice,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('aromaverse_cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            const btn = event.target;
+            const oldText = btn.innerText;
+            btn.innerText = "¡Añadido! ✓";
+            btn.style.backgroundColor = "#4CAF50";
+            setTimeout(() => { 
+                btn.innerText = oldText; 
+                btn.style.backgroundColor = "";
+            }, 1000);
+            
+            const panel = document.getElementById('cart-panel');
+            if(panel && panel.classList.contains('active')) updateCartDisplay();
         }
 
         function updateCartCount() {
             const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
+            const badge = document.getElementById('cart-count');
+            if(badge) badge.textContent = count;
         }
 
         function updateCartDisplay() {
-            const container = document.getElementById('cart-items');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            if (!cartItems) return;
+
             if (cart.length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:20px;">Tu carrito está vacío</div>';
-                document.getElementById('cart-total').textContent = '$0.00';
+                cartItems.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
+                if(cartTotal) cartTotal.textContent = '$0.00';
                 return;
             }
             
-            container.innerHTML = '';
+            cartItems.innerHTML = '';
             let total = 0;
             cart.forEach(item => {
-                const subtotal = item.price * item.quantity;
-                total += subtotal;
-                container.innerHTML += `
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartItems.innerHTML += `
                     <div class="cart-item">
-                        <div>
+                        <div class="cart-item-info">
                             <h4>${item.name}</h4>
-                            <small>Cant: ${item.quantity}</small>
+                            <p>Cantidad: ${item.quantity}</p>
                         </div>
-                        <div style="text-align:right;">
-                            <div>$${subtotal.toFixed(2)}</div>
-                            <small style="color:red; cursor:pointer;" onclick="removeFromCart('${item.id}')">Eliminar</small>
+                        <div>
+                            <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                            <button onclick="removeFromCart('${item.id}')" style="border:none; background:none; color:#dab469; cursor:pointer; text-decoration:underline; font-size:12px;">Eliminar</button>
                         </div>
                     </div>`;
             });
-            document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+            if(cartTotal) cartTotal.textContent = '$' + total.toFixed(2);
         }
 
         function removeFromCart(id) {
@@ -362,22 +829,41 @@
 
         function toggleCart() {
             const p = document.getElementById('cart-panel');
-            p.classList.toggle('active');
-            if(p.classList.contains('active')) updateCartDisplay();
+            if(p) {
+                p.classList.toggle('active');
+                if(p.classList.contains('active')) updateCartDisplay();
+            }
         }
 
         function checkout() {
-            if (cart.length === 0) return alert('Carrito vacío');
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío 🛒');
+                return;
+            }
+
+            const phoneNumber = "584242201111"; 
             
-            let msg = "Hola AromaVerse! Quiero pedir:\n\n";
             let total = 0;
-            cart.forEach(i => {
-                let sub = i.price * i.quantity;
-                total += sub;
-                msg += `▪ ${i.name} x${i.quantity} ($${sub})\n`;
+            let message = "👋 ¡Hola! Vengo de la web y estoy listo para finalizar mi compra en *AromaVerse*.\n\n";
+            message += "📝 *Resumen del Pedido:*\n";
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                message += `▪️ ${item.name} x${item.quantity} — $${subtotal.toFixed(2)}\n`;
             });
-            msg += `\nTotal: $${total.toFixed(2)}`;
-            window.open(`https://wa.me/584242201111?text=${encodeURIComponent(msg)}`, '_blank');
+
+            message += `\n💰 *TOTAL A PAGAR: $${total.toFixed(2)}*\n\n`;
+            message += "Quedo atento a los métodos de pago disponibles y detalles de envío. 🚚✨";
+
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
