@@ -408,39 +408,6 @@
         renderProducts(products); 
         updateCartCount();
 
-        /* --- FUNCIONES DEL MODAL DE COLECCIÓN --- */
-        function openLattafaCollection() {
-            const grid = document.getElementById('lattafa-grid');
-            grid.innerHTML = ''; // Limpiar previo
-
-            lattafaCollection.forEach(item => {
-                grid.innerHTML += `
-                    <div class="mini-card">
-                        <div style="font-size: 2rem;">${item.icon}</div>
-                        <h4>${item.name}</h4>
-                        <span class="gender">${item.gender}</span>
-                        <div class="notes">${item.notes}</div>
-                        <div class="price">$${item.price.toFixed(2)}</div>
-                        <button class="btn-mini-add" onclick="addSingleItemToCart('${item.name}', ${item.price})">Añadir al Carrito</button>
-                    </div>
-                `;
-            });
-
-            document.getElementById('lattafaModal').style.display = 'block';
-        }
-
-        function closeLattafaCollection() {
-            document.getElementById('lattafaModal').style.display = 'none';
-        }
-
-        // Cerrar modal si se hace clic fuera del contenido
-        window.onclick = function(event) {
-            const modal = document.getElementById('lattafaModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
         function addSingleItemToCart(name, price) {
             // Añadir items sueltos del modal al carrito
             const cartItemId = name.replace(/\s+/g, '-').toLowerCase(); // ID simple basado en nombre
@@ -568,10 +535,7 @@
                 
                 // Botón extra SOLO para la colección Lattafa (ID 1)
                 let extraButtonHTML = '';
-                if (product.id === 1) {
-                    extraButtonHTML = `<button class="btn-view-collection" onclick="openLattafaCollection()">Explorar Colección (7)</button>`;
-                }
-
+                
                 card.innerHTML = `
                     ${imageHTML}
                     <div class="product-info">
