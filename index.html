@@ -504,12 +504,32 @@
                 
                 // Generar HTML de Decants
                 let optionsHTML = '<div class="decants-section"><label>Formato:</label><div class="decants-options">';
-                optionsHTML += `
-                    <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
-                        <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
-                        <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
-                    </label>
-                `;
+                
+                // --- INICIO DE LA MAGIA ---
+                // Si el producto NO es "soloDecant", mostramos la opción de Botella
+                if (!product.soloDecant) {
+                    optionsHTML += `
+                        <label class="decant-option" style="border-color: var(--gold); background-color: rgba(218, 180, 105, 0.1);">
+                            <input type="radio" name="decant-${product.id}" value="Botella" data-price="${product.price}" checked onchange="updatePrice(${product.id})">
+                            <span class="decant-label">Botella ($${product.price.toFixed(2)})</span>
+                        </label>
+                    `;
+                }
+
+                // Generar las opciones de los decants (5ml, 10ml, 15ml)
+                product.decants.forEach((decant, index) => {
+                    // Si el perfume es "soloDecant", queremos que la primera opción (index 0) esté seleccionada por defecto
+                    let isChecked = (product.soloDecant && index === 0) ? "checked" : "";
+                    
+                    optionsHTML += `
+                        <label class="decant-option">
+                            <input type="radio" name="decant-${product.id}" value="${decant.ml}" data-price="${decant.price}" ${isChecked} onchange="updatePrice(${product.id})">
+                            <span class="decant-label">${decant.ml}ml - $${decant.price.toFixed(2)}</span>
+                        </label>
+                    `;
+                });
+                optionsHTML += '</div></div>';
+                // --- FIN DE LA MAGIA ---
 
                 product.decants.forEach((decant) => {
                     optionsHTML += `
